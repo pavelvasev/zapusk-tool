@@ -117,12 +117,25 @@ module DasPerformZdb
     end  
   
   def find_zdb_path( zdb_type,lookup )
+    # посмотреть в каталогах lookup
     for d in lookup do
       k = is_zdb_dir?( d,zdb_type+".zdb" )
       if k
         return k
       end
     end
+    # посмотреть на 1 уровень ниже в этих же каталогах
+    for d in lookup do
+      Dir.glob( File.join( d,"*" ) ).each do |p|
+        if File.directory?(p) && p !~ /\.zdb/i
+          k = is_zdb_dir?( p,zdb_type+".zdb" )
+          if k
+            return k
+          end
+        end
+      end
+    end
+    
     nil
   end
   
