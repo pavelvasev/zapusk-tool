@@ -1,5 +1,7 @@
-/_state/
-/_zapusk.removed/
+_state
+~state
+_zapusk.removed
+result*.txt
 /ruby.local/
 zapusk
 .gitignore-
