@@ -1,0 +1,1 @@
+this test checks that multiple components may exist in zapusk base

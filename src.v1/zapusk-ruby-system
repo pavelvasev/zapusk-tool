@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+TD=$(dirname "$(readlink -f "$0")")
+"$TD/zapusk.rb" $*

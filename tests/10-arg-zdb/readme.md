@@ -1,0 +1,1 @@
+This test checks that variables are passed to state directory.

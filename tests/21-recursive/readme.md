@@ -1,0 +1,1 @@
+This tests recursive nature of zapusk bases

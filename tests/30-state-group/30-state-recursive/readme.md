@@ -1,0 +1,1 @@
+This tests that state dirs of sub-components are create one inside other

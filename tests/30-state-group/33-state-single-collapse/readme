@@ -1,0 +1,2 @@
+This test checks that destroy command called only once
+but for each subcomponent (I dont really understand this test)

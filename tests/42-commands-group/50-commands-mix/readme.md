@@ -1,0 +1,1 @@
+this tests os call directed by default function name

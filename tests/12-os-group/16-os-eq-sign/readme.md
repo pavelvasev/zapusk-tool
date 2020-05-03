@@ -1,0 +1,1 @@
+this tests that = sign may exist in os call

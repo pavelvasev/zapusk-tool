@@ -1,0 +1,1 @@
+This test checks that ongoing [] sections are passed as `arg_files` variable to zdb type.

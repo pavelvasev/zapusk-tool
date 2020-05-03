@@ -1,0 +1,1 @@
+This checks how 'once' blocks commands called multiple times.

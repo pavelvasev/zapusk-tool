@@ -1,0 +1,9 @@
+No such file or directory @ rb_sysopen - /home/contact/prg/zapusk/zapusk-tool-17-chroot-employ/tests/21-recursive/cep1.zdb/~state/alfa/params.txt
+/home/contact/prg/zapusk/zapusk-tool-18-try-main-ini/src.v1/z1_22_params_io.rb:22:in `readlines'
+/home/contact/prg/zapusk/zapusk-tool-18-try-main-ini/src.v1/z1_22_params_io.rb:22:in `read_params_file'
+/home/contact/prg/zapusk/zapusk-tool-18-try-main-ini/src.v1/z1_90_logging.rb:46:in `read_params_file'
+/home/contact/prg/zapusk/zapusk-tool-18-try-main-ini/src.v1/z1_75_zapusk_conf.rb:20:in `init_from_zapusk_conf'
+~~~~~~~~~~
+^-cep1
+~~~~~~~~~~
+*** zapusk: started. /home/contact/prg/zapusk/zapusk-tool-18-try-main-ini/tests/21-recursive/cep1.zdb :: run33

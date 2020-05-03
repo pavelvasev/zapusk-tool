@@ -1,0 +1,1 @@
+This test checks situation when deploy is good, but ongoing command returns with <>0 exit code
