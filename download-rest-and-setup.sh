@@ -34,3 +34,5 @@ TD=/usr/local/bin
 echo_link zapusk "$TD/zapusk"
 
 echo_link lib/chroota.zdb/chroot-tool/chroot-tool.sh "$TD/chroot-tool.sh"
+
+echo "ALL DONE OK!"

@@ -5,3 +5,5 @@ result*.txt
 /ruby.local/
 zapusk
 .gitignore-
+/lib/*
+zapusk.global.conf
