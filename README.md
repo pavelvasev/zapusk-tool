@@ -1,37 +1,68 @@
 # zapusk-tool
 
-Инструмент для настройки машины.
+Инструмент для настройки машины. 
+Описание логики работы и языка см. [zapusk](https://github.com/pavelvasev/zapusk).
 
 ## Установка
 ```
-su
-mkdir /zapusk
-cd /zapusk
+cd some-where
 git clone https://github.com/pavelvasev/zapusk-tool.git
 cd ./zapusk-tool
 cp zapusk.global.conf.example zapusk.global.conf
 ./download-rest-and-setup.sh
 ```
 
+## Использование
+Пусть есть некая запуск-программа в каком-либо каталоге.
+
+Запуск:
+
+```
+zapusk apply --zdb_dir [path]
+```
+Здесь 
+* `zapusk` это исполняемый файл
+* `apply` - имя команды (можно также destroy, и любые другие)
+* `--zdb_dir [path]` - путь к каталогу запуск-программы
+
+Каталог запуск-программы должен содержать файл zapusk.conf следующего содержания:
+```
+state_dir=_some_state_dir # путь к каталогу хранения состояния
+```
+
+Необязательные опции программы:
+### --state_dir [path]
+Указание каталога состояния.
+
+### --only [mask]
+Выполнение только какой-то компоненты.
+
+### --debug
+
+### --a "name=value"
+Указание дополнительного параметра запроса.
+Можно также: -a (для совместимости с ansible).
+
 ## Подключение библиотек Лакт
 
 В поставке Zapusk-tool идет без библиотек. Есть библиотеки Лакт (ЛайнАкт), которые содержат ряд осмысленных кодов.
 
 ```
-git clone https://github.com/pavelvasev/zapusk-lact-libs.git /zapusk/zapusk-tool/libs/zapusk-lact-libs
+cd zapusk-tool/libs
+git clone https://github.com/pavelvasev/zapusk-lact-libs.git
 ```
 
 Примечание. Библиотеки лучше размещать прямо в папку libs, потому что так мы не мучаемся с 
 указанием путей к ним, и главное что весь zapusk монтируется в вирт. машины и т.о. 
 библиотеки тоже становятся доступны и там.
 
-## Использование
+## Встроенные типы шагов
+
+todo
+
+## Примеры
 
 См examples (todo)
-
-## Теория
-
-(todo)
 
 ## Copyright
 (c) 2020 Павел Васёв, ЛайнАкт
