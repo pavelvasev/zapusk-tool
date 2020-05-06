@@ -1,1 +1,2 @@
-chroota_base_dir=/zapusk.chroots/
+# following have meaning only if you use chroota zapusk type
+chroota_base_dir=/zapusk.chroots

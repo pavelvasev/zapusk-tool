@@ -1,4 +1,15 @@
 #!/usr/bin/env ruby
+# не смог найти как заставить работать это:
+# !/usr/bin/env ruby  "--encoding utf-8:utf-8"
+# note `--encoding utf-8:utf-8` -- this effects that external files are considered as utf-8
+# and that internally ruby will store strings as utf-8 too
+# поэтому вот так:
+
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+  
+# а без этих вещей, если локаль как-то не так настроена, то руби падает на чтении ини-файлов  
+
 this_script_path = File.expand_path File.dirname(__FILE__)
 
 require_relative "./z1"
