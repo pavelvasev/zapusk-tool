@@ -18,17 +18,25 @@ module DasDeferred
       r = super
     ensure
       k = ENV['ZAPUSK_DEFERRED_PATH']
-      if deferred_master && File.exist?( k )
-        h = read_params_file( k )
-        File.unlink( k )
-        log "deferred: found and calling deferred scripts. cmd=#{cmd}. keys=#{h.keys}"
-        # info "found deferred: #{h.keys}"
-        for n in h.keys do
-          cmd = h[n]
-          info "Run deferred script: #{cmd}"
-          puts subos_colors_begin
-          system( cmd )
-          puts subos_colors_done
+      if deferred_master 
+        count=0
+        # дефер-задачи могут еще повторно создавать дефер-задачи
+        while File.exist?( k )
+          h = read_params_file( k )
+          File.unlink( k )
+          log "deferred: found and calling deferred scripts. cmd=#{cmd}. keys=#{h.keys}"
+          # info "found deferred: #{h.keys}"
+          for n in h.keys do
+            cmd = h[n]
+            info "Run deferred script: #{cmd}"
+            puts subos_colors_begin
+            system( subos_command_options, cmd )
+            puts subos_colors_done
+          end
+          count=count+1
+          if count >= 10
+            warning "stopped deferred loop, >= 10 iterations!"
+          end
         end
         log "deferred: done"
       end

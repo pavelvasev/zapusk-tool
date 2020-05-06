@@ -8,7 +8,11 @@ module DasPerformBash
   
   def subos_colors_done
     "\e[0m"
-  end  
+  end
+  
+  def subos_command_options
+    { "ZAPUSK_DEBUG" => (self.debug ? "--debug" : ""), "ZAPUSK_PADDING" => "#{self.padding}  " }
+  end
 
   def perform_type_os( vars, nxt )
     log "perform_type_os: invoked with cmd=#{cmd}, subcomponent.name=#{vars['name']}"
@@ -44,7 +48,7 @@ module DasPerformBash
       
       print subos_colors_begin
       print "\n" if self.debug # доп \n нам нужен для более комфортного проведения тестов - грепить целые строчки
-      opts = { "ZAPUSK_DEBUG" => (self.debug ? "--debug" : ""), "ZAPUSK_PADDING" => "#{self.padding}  " }
+      opts = subos_command_options
       r = system( opts, cmd )
       print subos_colors_done
       print "\n" if self.debug
