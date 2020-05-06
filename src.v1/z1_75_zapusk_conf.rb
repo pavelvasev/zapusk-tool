@@ -23,7 +23,7 @@ module DasZapuskConf
   end
   
   def import_state_from_params( p )
-#    log "import_state_from_params: p=#{p.inspect}"
+    log "import_state_from_params: p=#{p.inspect}"
     if p["state_dir"]
       s = p["state_dir"]
       if s[0] == "." || s[0] != "/"
@@ -52,7 +52,12 @@ module DasZapuskConf
        orig =  self.global_name
        origprefix = self.global_prefix
        self.global_name_override = p["global_name"]
-       self.global_prefix = self.global_name_override # let all ancestors live inside this name?
+       self.global_prefix = ""
+       self.name = self.global_name_override
+       #self.global_name_override
+       # todo empty own global prefix?
+       # todo assign own new name?? (to global name) ?
+       #self.global_name_override # let all ancestors live inside this name?
        log "import_state_from_params: changed self global_name and global_prefix to '#{self.global_name_override}'. previous global_name was '#{orig}'. previous global_prefix was '#{origprefix}'"
        #log caller.join("\n")
     end

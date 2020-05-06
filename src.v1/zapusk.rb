@@ -29,6 +29,7 @@ z.load_global_conf
 # потому что.. читать его оттуда это оксюморон - там он сгенерирвоанный
 # а читать его из dir это тупняк - ибо может перебиться state-dir.
 # останется гибрид - прочитать таки из каталога dir, но не читать state-dir оттуда.
+
 if !z.state_dir
   z.init_from_zapusk_conf( File.join( z.dir, "zapusk.conf" ) )
 end
