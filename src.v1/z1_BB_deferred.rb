@@ -30,9 +30,22 @@ module DasDeferred
             cmd = h[n]
             info "Run deferred script: #{cmd}"
             puts subos_colors_begin
-            system( subos_command_options, cmd )
+            r = system( subos_command_options, cmd )
             puts subos_colors_done
-          end
+            
+            if r.nil?
+	      raise "os command execution failed. cmd was `#{cmd}`"
+	    elsif !r
+	      s = $?.exitstatus
+	      log "os command non-zero exit code! [#{s}]"
+	      if s == 100
+	        log "code 'stop' components computation"
+	        break
+	      end
+	      raise "unsupported non-zero exit code [#{s}]"
+            end
+          end # for
+            
           count=count+1
           if count >= 10
             warning "stopped deferred loop, >= 10 iterations!"

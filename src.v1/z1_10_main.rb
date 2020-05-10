@@ -30,7 +30,7 @@ module DasMain
     end
     raise "ready?: zdb dir file test failed, is not a directory! dir=#{dir}" if !File.directory?(dir)
     raise "ready?: components not loaded!" if comps.nil?
-    raise "ready?: cmd in invalid format" if self.cmd.nil? || self.cmd !~ /^[\w_-]+$/ # multiline??
+    raise "ready?: cmd in invalid format! cmd=#{self.cmd}" if self.cmd.nil? || self.cmd !~ /^[\w_-]+$/ # multiline??
     raise "ready?: name is not assigned!" if self.name.nil?
     raise "ready?: state_dir is not assigned!" if self.state_dir.nil?
     raise "ready?: state_dir too short!" if File.expand_path(self.state_dir).length < 4

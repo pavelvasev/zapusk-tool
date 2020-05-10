@@ -53,6 +53,7 @@ module DasPerformBash
       print subos_colors_done
       print "\n" if self.debug
     end
+    
     if r.nil?
       raise "os command execution failed. cmd was `#{cmd}`"
     elsif !r

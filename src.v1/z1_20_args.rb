@@ -1,6 +1,8 @@
 module DasArgs
   
   def init_from_args(args)
+    # info "init_from_args: args=#{args.inspect}"
+  
     self.cmd = args[0] || "list"
     i=1
     while i < args.length do
@@ -61,6 +63,9 @@ module DasArgs
         i=i+2
         next
       end
+      
+      raise "init_from_args: unparsed argument! v=#{v}. btw args=#{args.inspect}"
+      
       i=i+1
     end
   end
