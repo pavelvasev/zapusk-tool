@@ -60,7 +60,6 @@ module DasPerformZdb
           # тэкс. на уровне [] global_name не задано
           # первая идея - ну просто взять наше global name, и приплюсовать их имя 
           # но выяснилось что я хочу - задавать global_name на уровне типа
-          # co2["global_name"] = self.global_name + "-" + co2["name"]
           
           co2z = Zapusk.new
           co2z.dir = co2["type_dir"]
@@ -68,6 +67,7 @@ module DasPerformZdb
           co2z.parent = self
           co2z.init_from_dir
           co2["global_name"] = co2z.global_name # или прочтется из определения типа, или будет формула
+  
         end
         co2
       }
