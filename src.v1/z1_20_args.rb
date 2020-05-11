@@ -48,12 +48,14 @@ module DasArgs
         i=i+1
         next
       end
-#      if v == "--force"
-#        self.force = true
-#        log "init_from_args: force true."
-#        i=i+1
-#        next
-#      end            
+      if v == "--force"
+        # self.force = true
+        # решено пока использовать переменную..
+        log "init_from_args: force true."
+        ENV["ZAPUSK_FORCE"] = "--force"
+        i=i+1
+        next
+      end            
       if v == "--a"
         param = args[i+1] || (raise "init_from_args: where is the parameter value?")
         arr = param.split("=").map{|s|s.chomp}

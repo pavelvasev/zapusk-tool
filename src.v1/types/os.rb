@@ -12,6 +12,7 @@ module DasPerformBash
   
   def subos_command_options
     { "ZAPUSK_DEBUG" => (self.debug ? "--debug" : ""), "ZAPUSK_PADDING" => "#{self.padding}  " }
+    # todo force?
   end
 
   def perform_type_os( vars, nxt )
