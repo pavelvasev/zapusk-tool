@@ -5,4 +5,8 @@ Q=$(dirname "$(readlink -f "$0")")
 
 # this is important to run script using PATH modification
 # this will allow sub-ruby scripts to start via /usr/bin/env
-PATH="$Q/../ruby.local/bin:$PATH" "$Q/zapusk.rb" "$@"
+# PATH="$Q/../ruby.local/bin:$PATH" "$Q/zapusk.rb" "$@"
+# this was BAD IDEA
+# because in such case another rubies are hard to find
+
+"$Q/../ruby.local/bin/ruby" "$Q/zapusk.rb" "$@"
