@@ -1,3 +1,6 @@
+# feature: dump os command on command failure (useful!)
+# feature: + dump workding dir on command failure (useful!)
+
 module DasPerformBash
 
   # https://stackoverflow.com/a/16363159
@@ -11,7 +14,9 @@ module DasPerformBash
   end
   
   def subos_command_options
-    { "ZAPUSK_DEBUG" => (self.debug ? "--debug" : ""), "ZAPUSK_PADDING" => "#{self.padding}  " }
+    { "ZAPUSK_DEBUG" => (self.debug ? "--debug" : ""), "ZAPUSK_PADDING" => "#{self.padding}  ",
+      "GEM_HOME" => nil, "GEM_PATH" => nil # feature: supress gem vars - because local ruby sets them, and foreign uses..
+     }
     # todo force?
   end
 
@@ -56,15 +61,15 @@ module DasPerformBash
     end
     
     if r.nil?
-      raise "os command execution failed. cmd was `#{cmd}`"
+      raise "os command execution failed. cmd=[#{cmd}], pwd=[#{self.state_dir}]"
     elsif !r
       s = $?.exitstatus
-      log "os command non-zero exit code! [#{s}]"
+      log "os command non-zero exit code! [#{s}]."
       if s == 100
         log "code 'stop' components computation"
         return :stop
       end
-      raise "unsupported non-zero exit code [#{s}]"
+      raise "unsupported non-zero exit code [#{s}]. cmd=[#{cmd}], pwd=[#{self.state_dir}]"
     else
       log "perform_type_os: os command executed"
     end

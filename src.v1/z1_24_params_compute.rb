@@ -62,7 +62,7 @@ module DasParamsCompute
   end
   
   def find_param_value( name, dict, extra_dict, msg, already_computing,mask )
-#      log "FPV: name=#{name}"
+#      info "FPV: name=#{name}"
       if extra_dict[ name ]
 #        log "used extra-dict: #{extra_dict[ name ]}"
         return extra_dict[ name ]

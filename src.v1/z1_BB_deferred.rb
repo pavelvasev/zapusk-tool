@@ -51,7 +51,7 @@ module DasDeferred
             warning "stopped deferred loop, >= 10 iterations!"
           end
         end
-        log "deferred: done"
+        log "deferred: all done"
       end
       r
     end
