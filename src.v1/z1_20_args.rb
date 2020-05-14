@@ -55,7 +55,15 @@ module DasArgs
         ENV["ZAPUSK_FORCE"] = "--force"
         i=i+1
         next
-      end            
+      end
+      if v == "--deferred-master"
+        # self.force = true
+        # решено пока использовать переменную..
+        log "init_from_args: deferred master true."
+        ENV["ZAPUSK_DEFERRED_PATH"] = "" # будет использовано в слое B-deferred
+        i=i+1
+        next
+      end      
       if v == "--a"
         param = args[i+1] || (raise "init_from_args: where is the parameter value?")
         arr = param.split("=").map{|s|s.chomp}

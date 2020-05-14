@@ -65,6 +65,7 @@ module DasPerformZdb
           co2z.dir = co2["type_dir"]
           co2z.name = co2["name"]
           co2z.parent = self
+          co2z.external_params = co2
           co2z.init_from_dir
           co2["global_name"] = co2z.global_name # или прочтется из определения типа, или будет формула
   
