@@ -1,3 +1,5 @@
+# aim: provide global_name computation
+
 module DasGlobalName
 
   attr_accessor :global_name_override

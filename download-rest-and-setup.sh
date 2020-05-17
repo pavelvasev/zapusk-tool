@@ -33,6 +33,10 @@ TD=/usr/local/bin
 
 echo_link zapusk "$TD/zapusk"
 
+################## extra link for zapusk-lact-libs
+# this is placed here in order to not call any extra setup scripts for libs
+# (probably this should change in future)
+
 echo_link lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh "$TD/chroot-tool.sh"
 
 echo "ALL DONE OK!"

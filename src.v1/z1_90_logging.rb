@@ -1,3 +1,5 @@
+# aim: loggin facilities
+
 module DasLogging
 
   attr_accessor :padding

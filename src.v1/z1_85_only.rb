@@ -1,4 +1,4 @@
-# Implements the --only logic to run only subset of components
+# aim: implement the `--only` logic to run only subset of components
 
 module DasOnly
 

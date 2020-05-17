@@ -1,9 +1,14 @@
-# предназначение: предоставить возможность выполняить отложенные действия, причем сгруппированные по ключам
-# например таким образом можно не перезагружать нжинкс 10 раз
+# aim: provide deferred computation ability
 
-# использование - в глубинах выполнения скрипты должны писать в ENV["ZAPUSK_DEFERRED_PATH"] в ини-формате
-# записи вида
-# uniq-code = command line
+# usage:
+#  every zapusk component may add lines to a deferred file $ZAPUSK_DEFERRED_PATH in format:
+#  key-name1 = command1
+#  key-name2 = command2
+#  After zapusk-tool computes all tasks, it parses deferred file and calls commands specified in it
+#  In case of duplicates in keynames, only one command is called (last command has higher priority)
+
+#  In case of new commands in deferred file are added during computation of deferred commands, 
+#  the above algorythm is repeated up to N=10 times.
 
 module DasDeferred
 
@@ -20,7 +25,7 @@ module DasDeferred
       k = ENV['ZAPUSK_DEFERRED_PATH']
       if deferred_master 
         count=0
-        # дефер-задачи могут еще повторно создавать дефер-задачи
+        # deferered tasks may create new deferred tasks
         while File.exist?( k )
           h = read_params_file( k )
           File.unlink( k )

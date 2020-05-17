@@ -1,3 +1,12 @@
+# aim: 
+
+# * load zapusk program from *.ini files
+# * load zapusk.conf
+# * provide **own_params** -- final params of current program
+#   made by extracting `params`` section from loaded program, and mergit it with zapusk conf, external params, and global zapusk conf
+# * provide **own_body** -- loaded program of zapusk language (it's structure is desrcibed in params_io.rb)
+# * generate **zapusk_params** -- a params to save to zapusk.conf for component state directory
+
 require "pp"
 
 module DasOwnParams

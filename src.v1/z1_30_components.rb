@@ -1,3 +1,7 @@
+# aim: convert params (in zapusk language) into list of components
+#      which are high level of representation of zapusk program
+#      ready to be interpreted
+
 module DasComponentsLoad
 
   def init_from_dir

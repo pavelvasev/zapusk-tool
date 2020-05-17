@@ -1,3 +1,8 @@
+# aim 
+# * main skeleton module for Zapusk class 
+# * base attributes
+# * ready? method to check if Zapusk instance is ready to perform
+
 module DasMain
   attr_accessor :dir
   attr_accessor :cmd

@@ -7,13 +7,13 @@
 ```
 cd some-where
 git clone https://github.com/pavelvasev/zapusk-tool.git
-cd ./zapusk-tool
+cd zapusk-tool
 cp zapusk.global.conf.example zapusk.global.conf
 ./download-rest-and-setup.sh
 ```
 
 ## Использование
-Пусть есть некая запуск-программа в каком-либо каталоге.
+Пусть есть некая **запуск-программа** в каком-либо каталоге.
 
 Запуск:
 

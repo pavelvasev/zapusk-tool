@@ -1,3 +1,5 @@
+# aim: configure Zapusk instance using zapusk.conf
+
 # important to have priority more than state_manage, see prepare_state_dir override.
 
 module DasZapuskConf

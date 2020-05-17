@@ -1,3 +1,5 @@
+# aim: parse command line args
+
 module DasArgs
   
   def init_from_args(args)

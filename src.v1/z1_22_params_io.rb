@@ -1,10 +1,18 @@
-require "shellwords"
+# aim: 
+# * read and write zapusk language
+# * read and write params language (e.g. attrname=value)
 
-# Устройство параметров.
-# 1 Параметры это хеш
-# 2 Если загрузка произведена из ini, то есть ключ sections, который является массивом хешей
-# 3 Сообразно все ключи, встреченные до первой секции, пасутся как корневые ключи хеша параметров
-# 4 Новшество - #### разделы добавляются как sections с атрибутом hilevel
+# Zapusk language hash following structure in memory:
+# * This is hash, P
+# * Each `##### name #### ` section is stored as P[name] => hash_for_attrs
+#    + hash_for_attrs["hilevel"]=true
+# * Each `[name]` section is stored same, as P[name] => hash
+# * Names of all above sections are collected in special key P["sections"]
+
+# Thus zapusk language structure is a linear array of ### and [] sections
+# (they nesting is interpreted later using `hilevel` flag)
+
+require "shellwords"
 
 module DasParamsIO
 

@@ -1,3 +1,5 @@
+# aim: compute how many actuals steps are performed (somehow)
+
 module DasCounter
   
   attr_accessor :done_cmd_counter

@@ -1,3 +1,5 @@
+# aim: load *.rb files for zapusk project
+
 class Zapusk
   CODES_DIR=File.expand_path( File.dirname(__FILE__) )
   TOOL_DIR=File.expand_path( File.join( File.dirname(__FILE__), ".." ))

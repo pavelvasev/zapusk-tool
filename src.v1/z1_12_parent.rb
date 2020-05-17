@@ -1,3 +1,5 @@
+# aim: provide parent= method so configuring child zapusk instances will be easier
+
 module DasMainParent
   attr_accessor :parent
 

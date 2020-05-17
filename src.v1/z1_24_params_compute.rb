@@ -1,8 +1,8 @@
-# Устройство параметров.
-# 1 Параметры это хеш
-# 2 Если загрузка произведена из ini, то есть ключ sections, который является массивом хешей
-# 3 Сообразно все ключи, встреченные до первой секции, пасутся как корневые ключи хеша параметров
+# aim: provide computatation abilities for param values, e.g.
+# * replace `{{ paramname }}` entries with value of `paramname`
+# * replace `` os-command `` with it's output
 
+# main function is **compute_params**: params -> computed_params
 
 module DasParamsCompute
 

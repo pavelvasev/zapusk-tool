@@ -1,3 +1,5 @@
+# aim: compute zapusk program
+
 module DasPerform
 
   def perform

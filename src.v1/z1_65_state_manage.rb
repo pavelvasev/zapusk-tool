@@ -1,3 +1,11 @@
+# aim: manage state of sub-components of current zapusk component
+
+# btw:
+#   * create state dir for current component
+#   * track created sub-components
+#   * remove deployed sub-components which were then deleted by user
+
+
 require "fileutils"
 
 module DasStateManage

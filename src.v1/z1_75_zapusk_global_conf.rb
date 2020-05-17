@@ -1,3 +1,5 @@
+# aim: load zapusk.global.conf
+
 module DasZapuskConfGlobale
 
   attr_accessor :global_conf
