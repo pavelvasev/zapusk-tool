@@ -1,4 +1,5 @@
 #!/bin/bash -e
 
+# export ZAPUSK_TOOL="$(readlink -f "$0")"
 TD=$(dirname "$(readlink -f "$0")")
 "$TD/zapusk.rb" "$@"

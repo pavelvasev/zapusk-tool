@@ -9,4 +9,7 @@ Q=$(dirname "$(readlink -f "$0")")
 # this was BAD IDEA
 # because in such case another rubies are hard to find
 
+# export ZAPUSK_TOOL="$(readlink -f "$0")"
+# seems no need of this - we have {{zapusk_tool}}
+
 "$Q/../ruby.local/bin/ruby" "$Q/zapusk.rb" "$@"

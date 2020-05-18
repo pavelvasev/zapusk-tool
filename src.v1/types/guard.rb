@@ -39,7 +39,7 @@ module DasPerformGuard
       fmask = File.join( key_dir,"*.flag" )
       log "GUARD: checking if other users exist"
       Dir.glob( fmask ).each do |filepath|
-        log "GUARD: other user found. skipping destroy due to: #{filepath}"
+        info "GUARD: other user found. skipping destroy due to: #{filepath}"
         return :done_destroy_skipped_due_other_users
       end
       log "GUARD: no other users, passing action for ongoing processing: #{self.cmd}"
