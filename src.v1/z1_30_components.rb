@@ -126,7 +126,7 @@ module DasComponentsLoad
   end
 
   def compute_subcomponent_vars( vars, testmask=nil )
-     #log "compute_subcomponent_vars: vars=#{vars.inspect}"
+     log "compute_subcomponent_vars: vars=#{vars.inspect}"
      knowledge = self.params.merge( { "cmd" => self.cmd } )
      compute_params( vars, knowledge, "subcomponent #{vars['name']}", testmask )
   end

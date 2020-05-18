@@ -27,8 +27,12 @@ module DasPerform
   end
 
   def perform_expression( array )
-    computed = compute_subcomponent_vars( array[0] )
-    perform_subcomponent( computed, array[1..-1] )
+    if array.length > 0
+      computed = compute_subcomponent_vars( array[0] )
+      perform_subcomponent( computed, array[1..-1] )
+    else
+      :skipped_expression_empty
+    end
   end
 
   def perform_subcomponent( c, nxt )

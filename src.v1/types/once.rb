@@ -12,8 +12,9 @@ module DasPerformOnce
     # есть некий вопрос.. что у нас в vars? возможно, много лишнего, и не из области знаний про команды
     # а и всякое постороннее типа state_dir..
     log "ONCE filter. vars=#{vars.inspect}"
+    flags_dir_var_name="dir"
     if self.cmd == "destroy"
-      flags_dir = vars[ "flags-dir" ] || self.state_dir
+      flags_dir = vars[ flags_dir_var_name ] || self.state_dir
       fn = File.join( flags_dir,"once-#{vars['_component_name']}-*.flag" )
       log "ONCE filter: destroy => delete all my flags"
       Dir.glob( fn ).each do |filepath|
@@ -26,7 +27,7 @@ module DasPerformOnce
         return perform_expression( nxt )
       end
       # трюк - надо это делать с учетом имени компоненты
-      flags_dir = vars[ "dir" ] || self.state_dir
+      flags_dir = vars[ flags_dir_var_name ] || self.state_dir
       FileUtils.makedirs( flags_dir )
 
       fn = File.join( flags_dir,"once-#{vars['_component_name']}-#{self.cmd}.flag" )

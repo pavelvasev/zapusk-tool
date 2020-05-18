@@ -10,7 +10,7 @@ MSG="FINISHED OK: $K"
 if test -z "$TGT"; then
   TGT=.
   K=$(basename "$Q")
-  MSG="ALL FINISHED OK"
+  MSG="ALL TESTS FINISHED OK"
 fi
 
 # this dostn stop on fail
