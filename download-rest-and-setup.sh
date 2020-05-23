@@ -19,7 +19,7 @@ echo making file link for local zapusk command
 
 echo_link () {
   echo "linking '$1' → '$2'"
-  ln -sfr "$1" "$2"
+  ln -sf "$1" "$2"
 }
 
 echo_link src.v1/zapusk-ruby-local zapusk
@@ -31,12 +31,12 @@ echo making file links to zapusk for host system
 
 TD=/usr/local/bin
 
-echo_link zapusk "$TD/zapusk"
+echo_link $(readlink -f zapusk) "$TD/zapusk"
 
 ################## extra link for zapusk-lact-libs
 # this is placed here in order to not call any extra setup scripts for libs
 # (probably this should change in future)
 
-echo_link lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh "$TD/chroot-tool.sh"
+echo_link $(readlink -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh) "$TD/chroot-tool.sh"
 
 echo "ALL DONE OK!"
