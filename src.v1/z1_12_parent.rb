@@ -13,7 +13,13 @@ module DasMainParent
 
     self.zdb_lookup_dirs = p.zdb_lookup_dirs
     self.global_conf = p.global_conf
-    self.global_prefix = File.join( p.global_prefix, p.name )
+    
+    # новое:
+    self.global_prefix = p.global_name # parent_global_name?
+    
+    # до 18-05-2020:
+    # self.global_prefix = File.join( p.global_prefix, p.name )
+    
     # log "do_perform_zdb assigned global_prefix to subz = #{z.global_prefix}. self.global_prefix=#{self.global_prefix}"
     self.state_dir = File.join( p.state_dir, self.name )
 

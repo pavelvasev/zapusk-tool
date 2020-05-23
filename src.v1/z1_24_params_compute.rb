@@ -48,6 +48,10 @@ module DasParamsCompute
       name = $1.strip
       find_param_value( name, dict, extra_dict, msg, already_computing,mask )
     end
+    
+    # before os call, because I think os call may return anything and it will be valid
+    check_value_for_possible_errors( str )
+    
     # os
     str = str.gsub( /`([^`]+)`/ ) do |match| #`
       cmd = $1.strip
@@ -58,7 +62,16 @@ module DasParamsCompute
       # todo check 
       r.chomp
     end
+    
+
+    
     str
+  end
+  
+  def check_value_for_possible_errors( str )
+    if str =~ /{{([^}]+)}|{([^}]+)}}/
+      warning "check value for {}-mismatch errors! [#{str}]"
+    end
   end
   
   def find_param_value( name, dict, extra_dict, msg, already_computing,mask )
