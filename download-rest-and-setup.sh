@@ -41,7 +41,8 @@ sudo_echo_link $(readlink -f zapusk) "$TD/zapusk"
 ################## extra link for zapusk-lact-libs
 # this is placed here in order to not call any extra setup scripts for libs
 # (probably this should change in future)
-
-sudo_echo_link $(readlink -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh) "$TD/chroot-tool.sh"
+if test -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh; then
+  sudo_echo_link $(readlink -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh) "$TD/chroot-tool.sh"
+fi
 
 echo "ALL DONE OK!"
