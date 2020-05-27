@@ -66,14 +66,12 @@ module DasOwnParams
   attr_accessor :params # real runtime param values, computed
   
   def compute_final_self_params
+    # порядок вычисления см https://github.com/pavelvasev/zapusk/blob/master/spec-1-parts/30-syntax.md
     p = global_conf || {}
-    # это все бред сивой кобылы.
-    # todo - я думаю не надо мержить глобальные параметры быть может
-    # и еще туду - сделать мерж секций, пока его нету
     p = p.merge( zapusk_params )
     p = p.merge( own_params || {} )
     p = p.merge( external_params || {} )
-    # p = zapusk_params.merge( p ) # used zapusk-params - e.g. state_dir, so on.
+
     # вот вторая скобочка означает, что хрен вам, а не параметры извне
     # при вычислении собственных значений..
     p = compute_params( p,{},"#{self.global_prefix}/#{self.name} params" )
