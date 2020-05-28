@@ -9,7 +9,7 @@ module DasArgs
     i=1
     while i < args.length do
       v = args[i]
-      if v == "--zdb"
+      if v == "--zdb" # || v == "--zdb_dir" (second variant reason: to be same as --state_dir)
         self.dir = args[i+1] || (raise "init_from_args: where is cdb dir parameter value?")
         log "init_from_args: dir assigned: #{self.dir}"
         if !File.directory?(self.dir)
