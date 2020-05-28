@@ -25,6 +25,20 @@ z.padding = ENV["ZAPUSK_PADDING"] || ""
 
 z.init_from_args( ARGV )
 z.load_global_conf
+
+if z.cmd == "init"
+  z.info "zapusk init zdb-program in dir [#{z.dir}]"
+  if Dir.glob( File.join( z.dir, "*.{ini,conf}" ) ).length > 0
+    raise "cannot init dir, because it contains *.ini or *.conf files!"
+    exit 1
+  end
+  cmd = "cp #{File.join( this_script_path,'../template','*')} #{z.dir}"
+#  STDERR.puts "cmd=#{cmd}"
+  system(cmd)
+  z.info "done"
+  exit 0
+end
+
 # если стейт-дир указана в каталоге - забиваем на zapusk.conf
 # потому что.. читать его оттуда это оксюморон - там он сгенерирвоанный
 # а читать его из dir это тупняк - ибо может перебиться state-dir.
