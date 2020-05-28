@@ -13,7 +13,7 @@ cp zapusk.global.conf.example zapusk.global.conf
 ```
 
 ## Использование
-Пусть есть некая [запуск-программа](https://github.com/pavelvasev/zapusk/blob/master/getting-started.md) в каком-либо каталоге.
+Пусть есть некая [запуск-программа](https://github.com/pavelvasev/zapusk/tree/master/examples/1-getting-started.zdb) в каком-либо каталоге.
 
 Запуск:
 
@@ -65,7 +65,7 @@ git clone https://github.com/pavelvasev/zapusk-lact-libs.git
 
 ## Примеры
 
-См. [начало работы](https://github.com/pavelvasev/zapusk/blob/master/getting-started.md)
+[Примеры](https://github.com/pavelvasev/zapusk/tree/master/examples/)
 
 ## Copyright
 (c) 2020 Павел Васёв, ЛайнАкт
