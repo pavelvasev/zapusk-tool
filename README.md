@@ -12,7 +12,7 @@ cp zapusk.global.conf.example zapusk.global.conf
 ./download-rest-and-setup.sh
 ```
 
-## Создание новой программы
+## Быстрое создание новой программы
 
 1. Создайте каталог `имя.zdb`
 2. Войдите в него и выполните `zapusk init`
