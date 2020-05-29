@@ -27,22 +27,24 @@ z.init_from_args( ARGV )
 z.load_global_conf
 
 # копируем шаблон программы
+# feature: init program by template, as other projects do.
 if z.cmd == "init"
-  # feature: init program by template, as other projects do.
   z.info "zapusk init zdb-program in dir [#{z.dir}]"
   if Dir.glob( File.join( z.dir, "*.{ini,conf}" ) ).length > 0
     raise "cannot init dir, because it contains *.ini or *.conf files!"
     exit 1
   end
-  cmd = "cp #{File.join( this_script_path,'../template.zdb','*')} #{z.dir}"
+  FileUtils.cp_r Dir.glob( File.join( this_script_path,'../template.zdb','*') ), z.dir
+# use ruby methods due to portability
+#  cmd = "cp #{File.join( this_script_path,'../template.zdb','*')} #{z.dir}"
 #  STDERR.puts "cmd=#{cmd}"
-  system(cmd)
+#  system(cmd)
   z.info "done"
   exit 0
 end
 
+# feature: help || --help command suggested by Alexander Bersenev (beside his other suggestions)
 if z.cmd == "help" || z.cmd == "--help"
-  # feature: help || --help command suggested by Alexander Bersenev (beside his other suggestions)
   readme_content = File.open( File.join( this_script_path,"..","README.md" ),"r") { |f| f.read }
   readme_content =~ /help_begin(.+)help_end/m
   help_content = $1
@@ -77,7 +79,8 @@ z.send( (ENV["ZAPUSK_PADDING"] ? :log : :info), "zapusk: finished. #{z.dir} :: #
 
 rescue => err
 
-  STDERR.puts err.message
+# do not print here - will be printed below
+#  STDERR.puts err.message
   STDERR.puts "~~~~~~~~~~ ruby stack"
   if z && z.debug
     STDERR.puts err.backtrace.join("\n")

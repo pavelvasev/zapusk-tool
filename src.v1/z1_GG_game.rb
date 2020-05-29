@@ -11,10 +11,14 @@ module DasGamingGaming
     
     count=1
     extra = game_results_extra
-    for k in extra do
-      #s = s + "\n#{count}. #{k}"
-      info "#{count}. #{k}"
-      count=count+1
+    if extra.length == 1
+      info extra[0]
+    else
+      for k in extra do
+        #s = s + "\n#{count}. #{k}"
+        info "#{count}. #{k}"
+        count=count+1
+      end
     end
   end
   
