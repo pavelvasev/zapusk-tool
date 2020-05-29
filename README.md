@@ -63,6 +63,7 @@ zapusk destroy --debug
 
 * [Спецификация Zapusk](https://github.com/pavelvasev/zapusk/blob/master/spec-1.md)
 * [Примеры программ](https://github.com/pavelvasev/zapusk/tree/master/examples/)
+
 help_end
 
 ## Каталог состояния
