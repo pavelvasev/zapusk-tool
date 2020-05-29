@@ -66,12 +66,15 @@ zapusk destroy
 
 state_dir необходимо указать, без этого zapusk-программы не работают.
 
-* Вариант 1: файл zapusk.conf в каталоге zapusk-программы, следующего содержания:
+* Вариант 1: разместите файл `zapusk.conf` в каталоге zapusk-программы следующего содержания:
 ```
 state_dir=_state
 ```
 
 * Вариант 2: запускайте zapusk-tool с аргументом [--state_dir value]
+```
+zapusk apply --state_dir /var/some/state
+```
 
 ## Подключение библиотек Лакт
 
