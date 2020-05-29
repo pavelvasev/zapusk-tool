@@ -35,10 +35,7 @@ if z.cmd == "init"
     exit 1
   end
   FileUtils.cp_r Dir.glob( File.join( this_script_path,'../template.zdb','*') ), z.dir
-# use ruby methods due to portability
-#  cmd = "cp #{File.join( this_script_path,'../template.zdb','*')} #{z.dir}"
-#  STDERR.puts "cmd=#{cmd}"
-#  system(cmd)
+  # we use ruby methods due to portability
   z.info "done"
   exit 0
 end
@@ -52,10 +49,9 @@ if z.cmd == "help" || z.cmd == "--help"
   exit 0
 end
 
-# если стейт-дир указана в каталоге - забиваем на zapusk.conf
-# потому что.. читать его оттуда это оксюморон - там он сгенерирвоанный
-# а читать его из dir это тупняк - ибо может перебиться state-dir.
-# останется гибрид - прочитать таки из каталога dir, но не читать state-dir оттуда.
+# если state_dir указана в параметрах - более важный чем в zapusk.conf
+# для простоты пока забиваем на zapusk.conf
+# todo гибрид - прочитать таки из каталога dir, но не читать state-dir оттуда.
 
 if !z.state_dir
   z.init_from_zapusk_conf( File.join( z.dir, "zapusk.conf" ) )
