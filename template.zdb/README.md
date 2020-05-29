@@ -1,6 +1,6 @@
 # my-program
 
-Purporse: 
+Purpose: 
 
 # Example
 
