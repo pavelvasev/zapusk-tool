@@ -74,7 +74,7 @@ z.report_game
 z.send( (ENV["ZAPUSK_PADDING"] ? :log : :info), "zapusk: finished. #{z.dir} :: #{z.cmd} result=#{r}" )
 
 rescue => err
-
+#  STDERR.puts "ooo exception (error)!"
 # do not print here - will be printed below
 #  STDERR.puts err.message
   STDERR.puts "~~~~~~~~~~ ruby stack"

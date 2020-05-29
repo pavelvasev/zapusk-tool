@@ -75,7 +75,7 @@ module DasLogging
     str = ""
     c=1
     acc.reverse.each do |p|
-      str = str + ("  " * (c-1)) + "^-" + (p.global_path || p.dir || "unidentified zapusk instance") + "\n" # " [#{self.zdb_type}]" + "\n"
+      str = str + ("  " * (c-1)) + "^- #{p.global_name} [#{p.dir}]\n"
     end
     str
   end

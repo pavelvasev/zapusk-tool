@@ -47,6 +47,7 @@ help_begin
 
 ## Примеры
 ```
+zapusk init
 zapusk apply
 zapusk apply --only block1
 zapusk apply --a "target=luna"
@@ -58,6 +59,10 @@ zapusk destroy --debug
 * **zapusk init** - создает простую запуск-программу в текущем каталоге.
 * **zapusk help** - печатает справку.
 
+## См. также
+
+* [Спецификация Zapusk](https://github.com/pavelvasev/zapusk/blob/master/spec-1.md)
+* [Примеры программ](https://github.com/pavelvasev/zapusk/tree/master/examples/)
 help_end
 
 ## Каталог состояния
@@ -92,14 +97,6 @@ git clone https://github.com/pavelvasev/zapusk-lact-libs.git
 Примечание. Библиотеки лучше размещать прямо в папку lib, потому что так мы не мучаемся с 
 указанием путей к ним, и главное что весь zapusk монтируется в вирт. машины и т.о. 
 библиотеки тоже становятся доступны и там.
-
-## Встроенные типы шагов
-
-См. [спецификацию Zapusk](https://github.com/pavelvasev/zapusk/blob/master/spec-1.md)
-
-## Примеры запуск-программ
-
-[Примеры](https://github.com/pavelvasev/zapusk/tree/master/examples/)
 
 ## Copyright
 (c) 2020 Павел Васёв, ЛайнАкт

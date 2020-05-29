@@ -5,7 +5,10 @@ module DasArgs
   def init_from_args(args)
     # info "init_from_args: args=#{args.inspect}"
   
-    self.cmd = args[0] || "list"
+    self.cmd = args[0] || begin
+      log "command in argv[0] not specified. assuming default: help"
+      "help"
+    end
     i=1
     while i < args.length do
       v = args[i]
