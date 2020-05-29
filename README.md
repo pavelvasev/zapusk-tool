@@ -19,24 +19,12 @@ cp zapusk.global.conf.example zapusk.global.conf
 3. Вы получите код новой запуск-программы!
 
 ## Использование
+help_begin
 Пусть есть некая [запуск-программа](https://github.com/pavelvasev/zapusk/tree/master/examples/1-getting-started.zdb) в каком-либо каталоге.
 
-Запуск:
+Запуск: `zapusk команда [параметры]`
 
-```
-zapusk команда [параметры]
-```
-Здесь 
-* `zapusk` это исполняемый файл
-* `команда` это имя команды, напримепр apply, destroy и любые другие.
-
-Например:
-```
-zapusk apply
-zapusk apply --only block1
-zapusk restart
-zapusk destroy
-```
+* `команда` это имя команды, например apply, destroy и любые другие.
 
 ### Необязательные параметры:
 
@@ -44,7 +32,7 @@ zapusk destroy
 Указание каталога запуск-программы, если он отличается от текущего.
 
 ### --state_dir [path]
-Указание каталога состояния. См. далее [state_dir](#state_dir).
+Указание каталога состояния.
 
 ### --only [substr]
 Выполнение только компонент, в имени которых есть substr. 
@@ -54,10 +42,25 @@ zapusk destroy
 Вывод отладочной информации.
 
 ### --a "name=value"
-Указание дополнительного параметра команды.
+Передача параметра запуск-программе.
 Можно также: -a (для совместимости с ansible).
 
-## state_dir
+## Примеры
+```
+zapusk apply
+zapusk apply --only block1
+zapusk apply --a "target=luna"
+zapusk restart --zdb /where/is/my/program --state_dir /var/my-state
+zapusk destroy --debug
+```
+
+## Сервисные команды
+* **zapusk init** - создает простую запуск-программу в текущем каталоге.
+* **zapusk help** - печатает справку.
+
+help_end
+
+## Каталог состояния
 Важный параметр работы запуск-программы это каталог хранения её состояния.
 
 * В этом каталоге zapusk-tool сохраняет информацию, какие блоки были развернуты.
@@ -71,7 +74,7 @@ state_dir необходимо указать, без этого zapusk-прог
 state_dir=_state
 ```
 
-* Вариант 2: запускайте zapusk-tool с аргументом [--state_dir value]
+* Вариант 2: запускайте zapusk-tool с аргументом [--state_dir value]. Например:
 ```
 zapusk apply --state_dir /var/some/state
 ```
@@ -99,5 +102,5 @@ git clone https://github.com/pavelvasev/zapusk-lact-libs.git
 [Примеры](https://github.com/pavelvasev/zapusk/tree/master/examples/)
 
 ## Copyright
-(c) 2020 Павел Васёв, ЛайнАкт
-
+(c) 2020 Павел Васёв, Михаил Бахтерев
+ЛайнАкт (http://www.lact.ru)

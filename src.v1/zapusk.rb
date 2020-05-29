@@ -28,6 +28,7 @@ z.load_global_conf
 
 # копируем шаблон программы
 if z.cmd == "init"
+  # feature: init program by template, as other projects do.
   z.info "zapusk init zdb-program in dir [#{z.dir}]"
   if Dir.glob( File.join( z.dir, "*.{ini,conf}" ) ).length > 0
     raise "cannot init dir, because it contains *.ini or *.conf files!"
@@ -37,6 +38,15 @@ if z.cmd == "init"
 #  STDERR.puts "cmd=#{cmd}"
   system(cmd)
   z.info "done"
+  exit 0
+end
+
+if z.cmd == "help" || z.cmd == "--help"
+  # feature: help || --help command suggested by Alexander Bersenev
+  readme_content = File.open( File.join( this_script_path,"..","README.md" ),"r") { |f| f.read }
+  readme_content =~ /help_begin(.+)help_end/m
+  help_content = $1
+  z.info help_content
   exit 0
 end
 
