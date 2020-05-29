@@ -71,18 +71,26 @@ z.log "ready?=#{z.ready?}"
 
 r = z.perform
 
-#z.info "zapusk: finished. r=#{r}"
+z.report_game
+
 z.send( (ENV["ZAPUSK_PADDING"] ? :log : :info), "zapusk: finished. #{z.dir} :: #{z.cmd} result=#{r}" )
 
 rescue => err
+
   STDERR.puts err.message
+  STDERR.puts "~~~~~~~~~~ ruby stack"
   if z && z.debug
     STDERR.puts err.backtrace.join("\n")
   else
     STDERR.puts err.backtrace[0..3].join("\n")
   end
-  STDERR.puts "~~~~~~~~~~"
+  STDERR.puts "~~~~~~~~~~ zapusk stack"
   STDERR.puts z.stack_str
   STDERR.puts "~~~~~~~~~~"  
+
+  z.exception_title = err.message
+  z.report_game
+#  z.info "EXCEPTION: #{err.message}"
+
   exit 5
 end

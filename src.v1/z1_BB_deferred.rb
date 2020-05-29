@@ -18,12 +18,19 @@ module DasDeferred
     if deferred_master
       ENV["ZAPUSK_DEFERRED_PATH"] = File.expand_path( File.join( self.state_dir,"deferred.ini" ) )
     end
-    r = nil
-    begin
-      r = super
-    ensure
-      k = ENV['ZAPUSK_DEFERRED_PATH']
-      if deferred_master 
+    r = super
+    run_deferred_things
+    r
+#    begin
+#      r = super
+#    ensure
+#      r
+#    end
+  end
+  
+  def run_deferred_things
+    k = ENV['ZAPUSK_DEFERRED_PATH']
+    if deferred_master
         count=0
         # deferered tasks may create new deferred tasks
         while File.exist?( k )
@@ -55,10 +62,8 @@ module DasDeferred
           if count >= 10
             warning "stopped deferred loop, >= 10 iterations!"
           end
-        end
-        log "deferred: all done"
       end
-      r
+      log "deferred: all done"  
     end
   end
 

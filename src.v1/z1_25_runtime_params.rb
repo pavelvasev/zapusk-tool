@@ -35,6 +35,18 @@ module DasOwnParams
     Dir.glob( mask  ).sort.each do |f|
 #      log "load_own_params: found #{f}"
       c = File.readlines( f ) # IO. ?
+      # feature: warn if no ####, suggested by Mikhail Bakhterev (among his other suggestions)
+      has_header=false
+      for k in c do
+        if k =~ /^\s*####/
+          has_header = true
+          break
+        end
+      end
+      if !has_header
+        warning "File [#{f}] has no #### blocks!"
+      end
+      
       acc = acc + c
     end
 
