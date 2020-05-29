@@ -97,10 +97,9 @@ git clone https://github.com/pavelvasev/zapusk-lact-libs.git
 
 См. [спецификацию Zapusk](https://github.com/pavelvasev/zapusk/blob/master/spec-1.md)
 
-## Примеры
+## Примеры запуск-программ
 
 [Примеры](https://github.com/pavelvasev/zapusk/tree/master/examples/)
 
 ## Copyright
-(c) 2020 Павел Васёв, Михаил Бахтерев
-ЛайнАкт (http://www.lact.ru)
+(c) 2020 Павел Васёв, ЛайнАкт

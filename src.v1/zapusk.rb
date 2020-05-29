@@ -42,7 +42,7 @@ if z.cmd == "init"
 end
 
 if z.cmd == "help" || z.cmd == "--help"
-  # feature: help || --help command suggested by Alexander Bersenev
+  # feature: help || --help command suggested by Alexander Bersenev (beside his other suggestions)
   readme_content = File.open( File.join( this_script_path,"..","README.md" ),"r") { |f| f.read }
   readme_content =~ /help_begin(.+)help_end/m
   help_content = $1
