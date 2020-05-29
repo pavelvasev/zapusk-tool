@@ -19,7 +19,7 @@ module DasDeferred
       ENV["ZAPUSK_DEFERRED_PATH"] = File.expand_path( File.join( self.state_dir,"deferred.ini" ) )
     end
     r = super
-    run_deferred_things
+    run_deferred_things( deferred_master ) if deferred_master
     r
 #    begin
 #      r = super
@@ -28,12 +28,12 @@ module DasDeferred
 #    end
   end
   
-  def run_deferred_things
+  def run_deferred_things( deferred_master )
     k = ENV['ZAPUSK_DEFERRED_PATH']
-    if deferred_master
-        count=0
-        # deferered tasks may create new deferred tasks
-        while File.exist?( k )
+
+    count=0
+    # deferered tasks may create new deferred tasks
+    while File.exist?( k )
           h = read_params_file( k )
           File.unlink( k )
           log "deferred: found and calling deferred scripts. cmd=#{cmd}. keys=#{h.keys}"
@@ -62,9 +62,10 @@ module DasDeferred
           if count >= 10
             warning "stopped deferred loop, >= 10 iterations!"
           end
-      end
-      log "deferred: all done"  
-    end
+    end # while
+    
+    log "deferred: all done"  
+
   end
 
 end

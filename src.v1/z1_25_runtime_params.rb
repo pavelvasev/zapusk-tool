@@ -32,9 +32,16 @@ module DasOwnParams
     acc = []
     mask = File.join( srcdir,"*.ini")
 #    log "load_own_params: loading mask #{mask}"
-    Dir.glob( mask  ).sort.each do |f|
+    gg = Dir.glob( mask  )
+    # feature: report more warnings
+    if gg.length == 0
+      warning "load_own_params: no #{mask} files found!" # Are you sure you are running a zapusk program?"
+    end
+
+    gg.sort.each do |f|
 #      log "load_own_params: found #{f}"
       c = File.readlines( f ) # IO. ?
+      
       # feature: warn if no ####, suggested by Mikhail Bakhterev (among his other suggestions)
       has_header=false
       for k in c do
@@ -53,7 +60,7 @@ module DasOwnParams
     body = read_params_content( acc )
 
     if !body["sections"].is_a?(Array)
-      warning "load_own_params: loaded content from mask #{mask} have no ini sections!"
+      # warning "load_own_params: loaded content from mask #{mask} have no ini sections!"
       info "loaded content: #{body}"
       return {},[]
       # todo может это и не ошибка

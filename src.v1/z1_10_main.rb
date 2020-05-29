@@ -37,7 +37,7 @@ module DasMain
     raise "ready?: components not loaded!" if comps.nil?
     raise "ready?: cmd in invalid format! cmd=#{self.cmd}" if self.cmd.nil? || self.cmd !~ /^[\w_-]+$/ # multiline??
     raise "ready?: name is not assigned!" if self.name.nil?
-    raise "ready?: state_dir is not assigned! Are your running zapusk program?" if self.state_dir.nil?
+    raise "ready?: state_dir is not assigned! Are you running a zapusk program?" if self.state_dir.nil?
     raise "ready?: state_dir too short!" if File.expand_path(self.state_dir).length < 4
     if comps.length > 0 # пусть отсутствие глоб имени будет ошибкой только при наличии компонент
       raise "ready?: global_name length is 0!" if self.global_name.length == 0 
