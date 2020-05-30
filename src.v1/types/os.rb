@@ -74,7 +74,7 @@ module DasPerformBash
       log "perform_type_os: os command executed"
     end
 
-    :done
+    stop_expression( nxt )
   end
 
 end

@@ -43,7 +43,7 @@ module DasPerformFile
       end
     end
 
-    perform_expression( nxt )
+    stop_expression( nxt )
   end
 
 end

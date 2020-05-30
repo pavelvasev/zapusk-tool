@@ -26,6 +26,7 @@ module DasPerform
     array
   end
 
+  # выполняет шаги, записанные в array
   def perform_expression( array )
     if array.length > 0
       computed = compute_subcomponent_vars( array[0] )
@@ -35,6 +36,7 @@ module DasPerform
     end
   end
 
+  # выполняет 1 шаг
   def perform_subcomponent( c, nxt )
     type = c["type"]
     mname = "perform_type_#{type}"
@@ -44,6 +46,14 @@ module DasPerform
     else
       self.send( "perform_type_zdb", c, nxt )
     end
+  end
+  
+  # feature: напечатать warning если еще остались шаги, а мы их делать не будем
+  def stop_expression( array )
+    if array.length > 0
+      warning "following steps never will be performed: [#{array.inspect}]"
+    end
+    :done
   end
 
 end
