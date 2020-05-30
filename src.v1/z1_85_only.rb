@@ -12,7 +12,7 @@ module DasOnly
       if !component["name"].index(only).nil?
         super
       else
-        log "perform_component: skipped due to not matching --only filter. only=#{only}, name=#{component['name']}"
+        info "perform_component: skipped due to --only filter. only=#{only}, name=#{component['name']}"
         :skipped_due_to_only_filter
       end
     else

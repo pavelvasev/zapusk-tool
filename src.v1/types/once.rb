@@ -32,7 +32,7 @@ module DasPerformOnce
 
       fn = File.join( flags_dir,"once-#{vars['_component_name']}-#{self.cmd}.flag" )
       if File.exist?( fn )
-        info "ONCE filter: cmd=#{self.cmd} skipped due to `once` setting in #{self.global_name}/#{vars['_component_name']}"
+        log "ONCE filter: cmd=#{self.cmd} skipped due to `once` setting in #{self.global_name}/#{vars['_component_name']}"
         return :skipped_due_to_once
       end
       r = perform_expression( nxt )
