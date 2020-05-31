@@ -28,7 +28,7 @@ help_begin
 
 ### Необязательные параметры:
 
-### --zdb [path]
+### --zdb_dir [path]
 Указание каталога запуск-программы, если он отличается от текущего.
 
 ### --state_dir [path]
@@ -51,7 +51,7 @@ zapusk init
 zapusk apply
 zapusk apply --only block1
 zapusk apply --a "target=luna"
-zapusk restart --zdb /where/is/my/program --state_dir /var/my-state
+zapusk restart --zdb_dir /where/is/my/program.zdb --state_dir /var/my-state
 zapusk destroy --debug
 ```
 

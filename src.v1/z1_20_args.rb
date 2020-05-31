@@ -12,9 +12,10 @@ module DasArgs
     i=1
     while i < args.length do
       v = args[i]
-      if v == "--zdb" # || v == "--zdb_dir" 
+      if v == "--zdb" || v == "--zdb_dir" 
         # (second variant reason: to be same as --state_dir)
         # одна проблема с --zdb_dir в том, что а вдруг это не каталог, а ресурс? https://github/some/alfa.zdb ???
+        # ну и что - пофиг. если будет ресурс все-равно его дорабатывает, типа добавлять files.txt
         self.dir = args[i+1] || (raise "init_from_args: where is --zdb_dir parameter value?")
         log "init_from_args: zdb_dir assigned: #{self.dir}"
         if !File.directory?(self.dir)
