@@ -2,12 +2,12 @@
 # * read and write zapusk language
 # * read and write params language (e.g. attrname=value)
 
-# Zapusk language hash following structure in memory:
+# Zapusk language has following structure in memory:
 # * This is hash, P
-# * Each `##### name #### ` section is stored as P[name] => hash_for_attrs
-#    + hash_for_attrs["hilevel"]=true
-# * Each `[name]` section is stored same, as P[name] => hash
-# * Names of all above sections are collected in special key P["sections"]
+# * Each `##### name #### ` section is stored as P["sections"][i] = { "name" => name, "hilevel" => true }
+# * Each `[name]` section is stored as P["sections"][i] = { "name" => name, "hilevel" => false }
+# * Parameters before any sections stored as P["paramname"]=value
+# * Parameters inside any sections stored in their hash (noted above).
 
 # Thus zapusk language structure is a linear array of ### and [] sections
 # (they nesting is interpreted later using `hilevel` flag)
