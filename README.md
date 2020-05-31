@@ -85,19 +85,10 @@ state_dir=_state
 zapusk apply --state_dir /var/some/state
 ```
 
-## Подключение библиотек Лакт
+## Библиотеки Лакт
 
-В поставке Zapusk-tool идет без библиотек. 
+В поставке Zapusk-tool идет без библиотек.
 Есть [библиотеки ЛайнАкт](https://github.com/pavelvasev/zapusk-lact-libs), которые содержат ряд ценных кодов.
-
-```
-cd zapusk-tool/lib
-git clone https://github.com/pavelvasev/zapusk-lact-libs.git
-```
-
-Примечание. Библиотеки лучше размещать прямо в папку lib, потому что так мы не мучаемся с 
-указанием путей к ним, и главное что весь zapusk монтируется в вирт. машины и т.о. 
-библиотеки тоже становятся доступны и там.
 
 ## Copyright
 (c) 2020 Павел Васёв, ЛайнАкт
