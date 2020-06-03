@@ -10,6 +10,7 @@ module DasOnly
     if only
       #if File.fnmatch( only, component[:name], File::FNM_EXTGLOB ) -- sux.. \*autoge\* expands in bash!
       if !component["name"].index(only).nil?
+        info "perform_component: passed due to --only filter. only=#{only}, name=#{component['name']}"
         super
       else
         info "perform_component: skipped due to --only filter. only=#{only}, name=#{component['name']}"
