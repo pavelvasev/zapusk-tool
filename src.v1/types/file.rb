@@ -21,6 +21,8 @@ module DasPerformFile
     path[0] == "." || path[0] != "/"
   end
 
+  # TODO - распутать эту вермишель
+  # TODO - в этом коде есть косяк, он затирает файлы, см tests/50-featured-nodes/64-file-overwrite-change
   def perform_type_file( vars, nxt )
     path = vars["path"] || raise("perform_type_file: path not specified")
     content = vars["content"] || ""
@@ -31,12 +33,24 @@ module DasPerformFile
       path = File.join( self.state_dir, path )
     end
     
+    # бэкапим затираемые файлы
+    backup_path = File.join( self.state_dir, "file-backup-#{vars['_component_name']}" )
+    
     # выполняем спецификацию по отслеживанию ранее записанных файлов
     flag_path = File.join( self.state_dir, "created-file-#{vars['_component_name']}" )
-    if File.exist?( flag_path ) 
+    
+    if File.exist?( flag_path )
       previously_written_path = File.read( flag_path ).chomp
       if previously_written_path != path
-        File.unlink( previously_written_path ) if File.exist?( previously_written_path )
+        # восстановим то что затерли ранее
+        if File.exist?( backup_path )
+          self.info "file: restoring backup [#{previously_written_path}]"
+          FileUtils.cp( backup_path, previously_written_path )
+          File.unlink( backup_path )
+        else
+          File.unlink( previously_written_path ) if File.exist?( previously_written_path )
+        end
+        File.unlink( flag_path )
         log "file: deleted old [#{previously_written_path}] due to path change"
       end
     end
@@ -44,12 +58,27 @@ module DasPerformFile
     if self.cmd == "destroy"
       #if ! is_path_relative( path ) # для локальных удалять не будем
       # неправильная идея неудалять. файл локальный хранится в вышестоящей компоненте! он там может быть лишним.
-      File.unlink( path ) if File.exist?( path )
+      # если есть бэкап - восстановим его
+      if File.exist?( backup_path )
+        self.info "file: restoring backup [#{path}]"
+        FileUtils.cp( backup_path, path )
+        File.unlink( backup_path )
+      else # иначе просто стираем
+        File.unlink( path ) if File.exist?( path )
+      end
       log "file: deleted [#{path}] due to destroy"
       #end
+      
       File.unlink( flag_path ) if File.exist?( flag_path )
 #      unset_component_created_flag( vars["_component_name"] ) if is_component_created_flag(vars["_component_name"])
     else
+      # сохраним бекап если еще не сохраняли
+      if File.exist?(path) && !File.exist?( backup_path )
+        # пишем впервые - надо сохранить оригинал
+        self.info "making backup of [#{path}] to [#{backup_path}]"
+        FileUtils.cp( path, backup_path )
+      end
+    
       File.open( path,"w" ) { |f|
         f.write content
       }
