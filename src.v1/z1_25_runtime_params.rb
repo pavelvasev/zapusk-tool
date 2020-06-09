@@ -12,6 +12,7 @@ require "pp"
 module DasOwnParams
 
   def init_from_dir
+    #log "init_from_dir"
     self.own_params, self.own_body = load_own_params
     import_state_from_params( self.own_params )
     import_state_from_params( self.external_params || {} )
@@ -31,16 +32,18 @@ module DasOwnParams
 
     acc = []
     mask = File.join( srcdir,"*.ini")
-#    log "load_own_params: loading mask #{mask}"
+    log "load_own_params: loading mask #{mask}"
     gg = Dir.glob( mask  )
     # feature: report more warnings
     if gg.length == 0
       warning "load_own_params: no #{mask} files found!" # Are you sure you are running a zapusk program?"
     end
-
+    
+    line_counts = []
     gg.sort.each do |f|
 #      log "load_own_params: found #{f}"
       c = File.readlines( f ) # IO. ?
+      line_counts.push( [f, c.length] )
       
       # feature: warn if no ####, suggested by Mikhail Bakhterev (among his other suggestions)
       has_header=false
@@ -56,8 +59,17 @@ module DasOwnParams
       
       acc = acc + c
     end
+    
+    # функция i => имя файла
+    file_name_helper = lambda { |i|
+      for file_lc in line_counts do
+        return "#{file_lc[0]}:#{i}" if i <= file_lc[1]
+        i = i - file_lc[1]
+      end
+      return "unknown file"
+    }
 
-    body = read_params_content( acc )
+    body = read_params_content( acc, {}, file_name_helper )
 
     if !body["sections"].is_a?(Array)
       # warning "load_own_params: loaded content from mask #{mask} have no ini sections!"

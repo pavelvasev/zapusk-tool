@@ -41,11 +41,15 @@ module DasParamsIO
 
   def read_params_file( filepath,acc={} )
     content = File.readlines( filepath )
-    read_params_content( content )
+    read_params_content( content, {}, lambda {|i| filepath } )
     # todo: react on "include"
   end
+  
+  # тема file-resolver-lambda
+  # типа передаем функцию, которая по номеру строки сообщит нам имя файла
+  # если это понадобится для каких-то целей
 
-  def read_params_content( content,acc={} )
+  def read_params_content( content,acc={},file_resolver_lambda=nil )
     i = 0
     while i <content.length do
       line = content[i].strip
@@ -76,7 +80,9 @@ module DasParamsIO
         if line =~ /^\s*(#|``|\/\/)/ || line.length == 0 # if looks like comment or empty - skip it
           next
         end
-        raise "read_comp: failed to parse line: #{line}"
+        fn = file_resolver_lambda ? file_resolver_lambda.call( i ) : nil
+        infa = fn ? " from file #{fn}" : ""
+        raise "read_comp: failed to parse line: #{line}#{infa}"
       end
     end
     return acc
