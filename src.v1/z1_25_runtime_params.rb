@@ -21,11 +21,13 @@ module DasOwnParams
     super
   end
 
-  attr_accessor :external_params
-  attr_accessor :own_params
-  attr_accessor :own_params_dir_override
+  attr_accessor :external_params # external (computed) params, specified for this component
+  attr_accessor :own_params # own NON-computed params (just loaded)
+  attr_accessor :params # real runtime param values, computed
   
   attr_accessor :own_body # поле без колонки параметров - суть массив узлов верхних уровней
+  
+  attr_accessor :own_params_dir_override # override dir where to load params from
 
   def load_own_params
     srcdir = own_params_dir_override || self.dir
@@ -94,8 +96,6 @@ module DasOwnParams
 #    log "load_own_params: own_params=#{self.own_params.inspect}"
   end
 
-  attr_accessor :params # real runtime param values, computed
-  
   def compute_final_self_params
     # порядок вычисления см https://github.com/pavelvasev/zapusk/blob/master/spec-1-parts/30-syntax.md
     p = global_conf || {}
