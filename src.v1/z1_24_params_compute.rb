@@ -4,6 +4,9 @@
 
 # main function is **compute_params**: params -> computed_params
 
+# надо для caputure
+require "open3"
+
 module DasParamsCompute
 
   def compute_params( params, extra_know, error_msg_context,testmask=nil )
@@ -55,8 +58,16 @@ module DasParamsCompute
     # os
     str = str.gsub( /{`([^`]+)`}/ ) do |match| #`
       cmd = $1.strip
-      r = `#{cmd}`
-      if $?.exitstatus != 0
+      env = subos_command_options
+      # похоже единственный способ передать env в `` это вызвать Open3
+      # а нам надо передать, чтобы GEM_HOME и проч. нормально были настроены
+      # https://ruby-doc.org/stdlib-2.3.1/libdoc/open3/rdoc/Open3.html
+      # + еще можно как в os, перейти в каталог.. Dir.chdir( self.state_dir ) do ... end
+      # + но это надо будет закрепить в спецификации тогда 
+      r,status = Open3.capture2( env, cmd )
+      #r = `#{cmd}`
+      #if $?.exitstatus != 0
+      if status != 0
         raise "compute_param_value: {`...`}-os call returned non 0 exit code. cmd=#{cmd}"
       end
       # todo check 
