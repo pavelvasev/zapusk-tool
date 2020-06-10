@@ -53,11 +53,11 @@ module DasParamsCompute
     check_value_for_possible_errors( str )
     
     # os
-    str = str.gsub( /`([^`]+)`/ ) do |match| #`
+    str = str.gsub( /{`([^`]+)`}/ ) do |match| #`
       cmd = $1.strip
       r = `#{cmd}`
       if $?.exitstatus != 0
-        raise "compute_param_value: os call returned non 0 exit code. cmd=#{cmd}"
+        raise "compute_param_value: {`...`}-os call returned non 0 exit code. cmd=#{cmd}"
       end
       # todo check 
       r.chomp
