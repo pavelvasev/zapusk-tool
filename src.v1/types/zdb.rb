@@ -110,7 +110,15 @@ module DasPerformZdb
     if ["destroy"].include?(self.cmd)
       unset_component_created_flag( z.name ) if is_component_created_flag( z.name )
     end
-    
+
+#    if res == :continue_step
+#      res =  if nxt.length > 0
+#         perform_expression( nxt )
+#      else
+#         :done
+#      end
+#    end
+
     res
   end
 

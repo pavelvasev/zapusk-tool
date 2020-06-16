@@ -44,14 +44,14 @@ module DasPerformFile
       if previously_written_path != path
         # восстановим то что затерли ранее
         if File.exist?( backup_path )
-          self.info "file: restoring backup [#{previously_written_path}]"
+          self.info "file: path changed, restoring backup file for previous path [#{previously_written_path}]"
           FileUtils.cp( backup_path, previously_written_path )
           File.unlink( backup_path )
         else
           File.unlink( previously_written_path ) if File.exist?( previously_written_path )
+          log "file: deleted old [#{previously_written_path}] due to path change"
         end
         File.unlink( flag_path )
-        log "file: deleted old [#{previously_written_path}] due to path change"
       end
     end
 
@@ -83,7 +83,11 @@ module DasPerformFile
         f.write content
       }
       if vars["mode"]
-        FileUtils.chmod( vars["mode"],  path )
+        mode = vars["mode"]
+        if mode =~ /\A0?\d\d\d\z/ # три цифры или 0итрицифры
+          mode = mode.to_i(8) # потому что FileUtils.chmod требует числа
+        end
+        FileUtils.chmod( mode,  path )
       end
       log "file: wrote [#{path}]"
       

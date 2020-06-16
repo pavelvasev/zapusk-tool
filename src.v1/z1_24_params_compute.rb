@@ -1,6 +1,6 @@
 # aim: provide computatation abilities for param values, e.g.
 # * replace `{{ paramname }}` entries with value of `paramname`
-# * replace `` os-command `` with it's output
+# * replace `{\` os-command \`}` with os-command standard output
 
 # main function is **compute_params**: params -> computed_params
 

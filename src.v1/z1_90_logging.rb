@@ -75,7 +75,7 @@ module DasLogging
     str = ""
     c=1
     acc.reverse.each do |p|
-      str = str + ("  " * (c-1)) + "^- #{p.global_name} [#{p.dir}]\n"
+      str = str + ("  " * (c-1)) + "^- global_name=[#{p.global_name}] dir=[#{p.dir}] state_dir=[#{p.state_dir}] cmd=[#{p.cmd}]\n"
     end
     str
   end

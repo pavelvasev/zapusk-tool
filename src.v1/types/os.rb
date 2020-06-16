@@ -69,6 +69,11 @@ module DasPerformBash
         log "code 'stop' components computation"
         return :stop
       end
+#      if s == 110
+#        log "code 'continue_step' components computation"
+#        return :contunue_step
+#      end
+#     * Если команда вернула код возврата 110, это считается запросом продолжить обработку следующих шагов в текущей компоненте вызывающего zdb-типа.
       raise "unsupported non-zero exit code [#{s}]. cmd=[#{cmd}], pwd=[#{self.state_dir}]"
     else
       log "perform_type_os: os command executed"

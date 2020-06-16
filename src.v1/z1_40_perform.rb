@@ -5,17 +5,20 @@ module DasPerform
   def perform
     ready?
 
+    k = :done
     for c in self.comps do
       k = perform_component( c )
       raise "not a symbol!" if !k.is_a?(Symbol)
       if k == :stop
         # return :stop
         # да, вопрос - это пока у нас получается локальный стоп
+        k = :done
         break
       end
     end
 
-    :done
+    # ну получается мы возвращаем что вернул последний из компонент.. ок..
+    k
   end
 
   def perform_component( c )
