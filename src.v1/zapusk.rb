@@ -17,6 +17,8 @@ require_relative "./z1"
 begin
 
 z = Zapusk.new
+z.name = "name-not-inited"
+
 z.debug = ENV["ZAPUSK_DEBUG"]
 z.debug = nil if z.debug == ""
 z.padding = ENV["ZAPUSK_PADDING"] || ""
@@ -56,7 +58,7 @@ end
 if !z.state_dir
   z.init_from_zapusk_conf( File.join( z.dir, "zapusk.conf" ) )
 end
-z.name ||= File.basename( File.expand_path( z.dir ),".zdb" )
+z.name = File.basename( File.expand_path( z.dir ),".zdb" ) if z.name == "name-not-inited"
 z.init_from_dir
 z.zdb_lookup_dirs.push(File.join( Zapusk::TOOL_DIR,"lib" ))
 z.ready?
@@ -77,6 +79,8 @@ rescue => err
 #  STDERR.puts "ooo exception (error)!"
 # do not print here - will be printed below
 #  STDERR.puts err.message
+  #STDERR.puts z.lst_log_item
+  
   STDERR.puts "~~~~~~~~~~ ruby stack"
   if z && z.debug
     STDERR.puts err.backtrace.join("\n")
@@ -84,8 +88,10 @@ rescue => err
     STDERR.puts err.backtrace[0..3].join("\n")
   end
   STDERR.puts "~~~~~~~~~~ zapusk stack"
-  STDERR.puts z.stack_str
+  STDERR.puts z.current_stack_top.stack_str
   STDERR.puts "~~~~~~~~~~"  
+  
+  STDERR.puts z.current_stack_top.lst_log_item
 
   z.exception_title = err.message
   z.report_game

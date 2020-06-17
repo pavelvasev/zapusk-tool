@@ -134,6 +134,7 @@ module DasStateManage
       return
     end
     z.parent = self
+    track_stack(z) do
 
     # we need to get params from state
     # because vars from these params may be used in computations
@@ -143,6 +144,7 @@ module DasStateManage
     z.init_from_dir
     z.cmd = "destroy"
     z.perform
+    end # track stack
 
     # component itself will issue it's own collapse_state_dir call
     # collapse_state_dir( state_path, backup_dir )

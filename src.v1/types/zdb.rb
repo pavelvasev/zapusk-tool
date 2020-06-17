@@ -22,6 +22,9 @@ module DasPerformZdb
     
   
     z = Zapusk.new
+    res = nil
+    
+    track_stack( z ) do
     z.dir = path
     # z.name = vars["_component_name"] || vars["name"]  
     # очень тонкий момент - мы присваиваем этому слою даже не свое имя, а имя компоненты
@@ -110,6 +113,7 @@ module DasPerformZdb
     if ["destroy"].include?(self.cmd)
       unset_component_created_flag( z.name ) if is_component_created_flag( z.name )
     end
+    end # track stack
 
 #    if res == :continue_step
 #      res =  if nxt.length > 0

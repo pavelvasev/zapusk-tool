@@ -10,7 +10,9 @@ module DasLogging
     super
   end
 
+  attr_accessor :lst_log_item
   def log( msg )
+    self.lst_log_item=msg
     puts "#{padding}#{msg}" if debug
   end
 
@@ -63,21 +65,6 @@ module DasLogging
   def parent=(p)
     self.padding = p.padding + "  "
     super
-  end
-  
-  def stack_str
-    p = self
-    acc = []
-    while p do
-      acc.push p
-      p=p.parent
-    end
-    str = ""
-    c=1
-    acc.reverse.each do |p|
-      str = str + ("  " * (c-1)) + "^- global_name=[#{p.global_name}] dir=[#{p.dir}] state_dir=[#{p.state_dir}] cmd=[#{p.cmd}]\n"
-    end
-    str
   end
 
 end
