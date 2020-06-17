@@ -4,11 +4,6 @@
 module DasGamingGaming
 
   def report_game
-    v = game_results
-    s = v[0..-2].join(", ") + " and #{v[-1]}."
-    #s = v.join(".")
-    info "Achievements: #{s}"
-    
     count=1
     extra = game_results_extra
     if extra.length == 1
@@ -20,6 +15,11 @@ module DasGamingGaming
         count=count+1
       end
     end
+    
+    v = game_results
+    s = v[0..-2].join(", ") + " and #{v[-1]}."
+    #s = v.join(".")
+    info "Achievements: #{s}"    
   end
   
   def game_results

@@ -7,7 +7,7 @@ module DasPerformZdb
     log "perform_type_zdb: type=#{zdb_type}"
     log "btw vars=#{vars.inspect}"
     log "vtw nxt=#{nxt.inspect}"
-    zdb_path = find_zdb_path_e( zdb_type )
+    zdb_path = find_zdb_path_e( vars )
     do_perform_zdb( zdb_path, vars, nxt )
   end
 
@@ -57,7 +57,7 @@ module DasPerformZdb
       computed = nxt.map { |co|
         co2 = compute_subcomponent_vars( co )
         if !co2["type_dir"]
-          co2["type_dir"] = find_zdb_path_e( co2["type"] )
+          co2["type_dir"] = find_zdb_path_e( co2 )
         end
         if !co2["global_name"]
           # тэкс. на уровне [] global_name не задано
@@ -70,7 +70,23 @@ module DasPerformZdb
           co2z.parent = self
           co2z.external_params = co2
           co2z.init_from_dir
+          
+          # вот это еще больший хак, проверка на main
+          # но так уж повелось, что у chroot-типов я пишу main, и они уже развернуты
+          # а формально, вроде как, надо все-таки чтобы был учет текущей компоненты.. ну надо.. это некий scope, чистой воды..
+          # и второй хак - что имя компоненты не равно имени шага, а то какая-то тафталогия получается..
+          if vars["name"] != "main" && vars["name"] != co2["name"]
+            co2z.global_prefix = self.global_name + "-" + vars["name"] # это хак, но без него и вовсе глупость выходит
+          end
+          # todo добавить защиту от дублирования имен компонент. но пока это активно юзается только в employ
+          # а там валится ошибка если тчо
+          
+          # ибо получается что мы prefix задаем - наше global_name, а оно относится ко всей программе, а не к текущему блоку
+          # и т.о. мы восстановили как бы справедливость
+          # единственное что - возможно надо не vars["name"] читать, а _component_name все-таки
+          
           co2["global_name"] = co2z.global_name # или прочтется из определения типа, или будет формула
+          #info( "co2 assigned global name ="+co2["global_name"]+", btw self global_name="+self.global_name+"and vars[name]="+vars["name"] )
   
         end
         co2
@@ -130,7 +146,14 @@ module DasPerformZdb
     z.perform
   end
   
-    def find_zdb_path_e( zdb_type )
+    def find_zdb_path_e( vars )
+      zdb_type = vars["type"]
+      
+      # если указали напрямую - пожалуйста, мы не против
+      td =  vars["type_dir"]
+      return td if td && File.directory?( td )
+      
+      # поищем в каталогах..
       lookup = [ self.dir ].concat( self.zdb_lookup_dirs )
       zdb_path = find_zdb_path( zdb_type,lookup )
       if zdb_path.nil?

@@ -24,14 +24,19 @@ module DasZapuskConf
     end
   end
   
+  # (dirname, basedir) -> выровненный dirname
+  def param_dir( s, basedir )
+    if s[0] == "." || s[0] != "/"
+        s = File.join( basedir, s ) # use old dir value for that.. before reading new one..
+      end
+    s = File.expand_path( s )
+  end
+  
   def import_state_from_params( p )
     log "import_state_from_params: p=#{p.inspect}"
     if p["state_dir"]
       s = p["state_dir"]
-      if s[0] == "." || s[0] != "/"
-        s = File.join( self.dir, s ) # use old dir value for that.. before reading new one..
-      end
-      s = File.expand_path( s )
+      s = param_dir( s, self.dir )
       self.state_dir = s
     end
 
@@ -67,6 +72,12 @@ module DasZapuskConf
     if p["use_state_params"]
       self.use_state_params = true
     end
+
+#   подождем пока.. если за это браться, то придется их еще и сохранять на каждом этапе..
+#    if p["extra_libs"]
+#      vals = p["extra_libs"].split(/":"/).map(&:chomp).delete_if{ |x| x.nil? && x.length == 0 }.map{ |x| param_dir( x, self.dir ) }
+#      self.zdb_lookup_dirs = (vals + self.zdb_lookup_dirs).uniq
+#    end
     
     #log "init_from_zapusk_params: using zdb dir #{self.dir} and state dir #{self.state_dir}"  
   end

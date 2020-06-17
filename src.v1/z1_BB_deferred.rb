@@ -40,7 +40,7 @@ module DasDeferred
           # info "found deferred: #{h.keys}"
           for n in h.keys do
             cmd = h[n]
-            info "Run deferred script: #{cmd}"
+            info "Run deferred script: #{n}"
             puts subos_colors_begin
             r = system( subos_command_options, cmd )
             puts subos_colors_done

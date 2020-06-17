@@ -1,0 +1,17 @@
+# zapusk-синтаксис:
+# https://github.com/pavelvasev/zapusk/blob/master/spec-1.md#%D1%81%D0%B8%D0%BD%D1%82%D0%B0%D0%BA%D1%81%D0%B8%D1%81
+
+############################## block-1
+[info]
+apply=a1, gn={{global_name}}
+
+[employ]
+
+[item1]
+[item1]
+[item1]
+
+
+############################# block-2
+[item1]
+q=5
