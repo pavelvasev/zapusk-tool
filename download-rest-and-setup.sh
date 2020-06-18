@@ -16,7 +16,7 @@ sudo_echo_link () {
 
 ################ download and setup
 
-echo checking local ruby
+echo "===== checking local ruby"
 
 arch=$(uname -m)
 if test "$arch"  == "x86_64"; then
@@ -28,15 +28,18 @@ if test "$arch"  == "x86_64"; then
     echo_link src.v1/zapusk-ruby-local zapusk
   fi
 else
-  echo "=============== WARNING! Your arch=$arch, please install ruby to run zapusk. ===================="
+  if ruby -v; then
+    echo "Your arch=$arch, detected ruby in system, it will be used run zapusk."
+  else
+    echo "!!!!!!!!!!!!!!!!!!!!!!! WARNING! Your arch=$arch, please install ruby to run zapusk. !!!!!!!!!!!!!!!!"
+  fi
   echo_link src.v1/zapusk-ruby-system zapusk
 fi
-
 
 ################## setup
 # deploys links into system
 
-echo making file links to zapusk for host system
+echo "===== making file links to zapusk for host system"
 
 TD=/usr/local/bin
 
@@ -49,4 +52,5 @@ if test -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh; then
   sudo_echo_link $(readlink -f lib/zapusk-lact-libs/chroota.zdb/chroot-tool/chroot-tool.sh) "$TD/chroot-tool.sh"
 fi
 
+echo "===== result"
 echo "ALL DONE OK!"
