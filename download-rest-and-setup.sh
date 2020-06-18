@@ -3,20 +3,7 @@
 Q=$(dirname "$(readlink -f "$0")")
 pushd "$Q"
 
-################ download
-
-echo checking local ruby
-
-if test ! -d ruby.local
-then
-  curl -L -O --fail https://d6r77u77i8pq3.cloudfront.net/releases/traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz
-  mkdir ruby.local && tar -xzf traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz -C ruby.local && rm traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz
-fi
-
-################ setup local zapusk link
-
-echo making file link for local zapusk command
-
+################# funcs
 echo_link () {
   echo "linking '$1' → '$2'"
   ln -sf "$1" "$2"
@@ -27,7 +14,24 @@ sudo_echo_link () {
   sudo ln -sf "$1" "$2"
 }
 
-echo_link src.v1/zapusk-ruby-local zapusk
+################ download and setup
+
+echo checking local ruby
+
+arch=$(uname -m)
+if test "$arch"  == "x86_64"; then
+  if test ! -d ruby.local
+  then
+    curl -L -O --fail https://d6r77u77i8pq3.cloudfront.net/releases/traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz
+    mkdir ruby.local && tar -xzf traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz -C ruby.local && rm traveling-ruby-20141215-2.1.5-linux-x86_64.tar.gz
+    #echo making file link for local zapusk command
+    echo_link src.v1/zapusk-ruby-local zapusk
+  fi
+else
+  echo "=============== WARNING! Your arch=$arch, please install ruby to run zapusk. ===================="
+  echo_link src.v1/zapusk-ruby-system zapusk
+fi
+
 
 ################## setup
 # deploys links into system
