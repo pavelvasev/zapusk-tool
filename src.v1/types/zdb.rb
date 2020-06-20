@@ -172,7 +172,7 @@ module DasPerformZdb
     end
     # посмотреть на 1 уровень ниже в этих же каталогах
     for d in lookup do
-      Dir.glob( File.join( d,"*" ) ).each do |p|
+      Dir.glob( File.join( d,"*" ) ).sort.each do |p|
         if File.directory?(p) && p !~ /\.zdb/i
           k = is_zdb_dir?( p,zdb_type+".zdb" )
           if k
