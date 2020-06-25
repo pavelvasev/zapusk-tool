@@ -33,7 +33,7 @@ module DasZapuskConf
   end
   
   def import_state_from_params( p )
-    log "import_state_from_params: p=#{p.inspect}"
+    # log "import_state_from_params: p=#{p.inspect}"
     if p["state_dir"]
       s = p["state_dir"]
       s = param_dir( s, self.dir )
