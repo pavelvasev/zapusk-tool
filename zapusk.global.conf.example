@@ -1,2 +1,3 @@
 # following have meaning only if you use chroota zapusk type
 chroota_base_dir=/zapusk.chroots
+chroota_debian_version=buster
