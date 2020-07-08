@@ -13,7 +13,7 @@ module DasZapuskConfDefault
     if File.exist?(fn)
       defaults = read_params_file( fn )
       
-      self.global_conf = defaults.merge( self.global_conf )
+      self.global_conf = defaults.merge( self.global_conf || {} )
     end
 
   end
