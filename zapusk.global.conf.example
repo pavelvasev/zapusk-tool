@@ -1,3 +1,4 @@
-# following have meaning only if you use chroota zapusk type
-chroota_base_dir=/zapusk.chroots
-chroota_debian_version=buster
+# you may create zapusk-tool/zapusk.global.conf file and put any parameters in it.
+# these parameters:
+# * will be present in all zdb types
+# * override values from zapusk.tool-defaults.conf
