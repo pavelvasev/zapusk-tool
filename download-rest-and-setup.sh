@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# idea: reformat it in zapusk-style
+
 Q=$(dirname "$(readlink -f "$0")")
 pushd "$Q"
 
@@ -41,7 +43,9 @@ fi
 
 echo "===== making file links to zapusk for host system"
 
-TD=/usr/local/bin
+#TD=/usr/local/bin
+# /usr/bin is better because this path is known during system startap (whereas /usr/local/bin is not)
+TD=/usr/bin
 
 sudo_echo_link $(readlink -f zapusk) "$TD/zapusk"
 
