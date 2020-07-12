@@ -20,6 +20,31 @@ module DasPerformFile
   def is_path_relative( path )
     path[0] == "." || path[0] != "/"
   end
+  
+  EMPTY_BACKUP_MARK="zapusk-file-empty-mark"
+
+  # задача - восстановить файл path из backup_path если backup_path есть, и стереть если нет
+  # при этом в файле backup_path может быть особая метка говорящая,
+  #  что реально бэкапа нет и там было пусто
+
+  def restore_or_erase!( path, backup_path )
+    if File.exist?( backup_path )
+      firstline = File.open( backup_path,"r") do |bf|
+        bf.gets.chomp
+      end
+      if firstline == EMPTY_BACKUP_MARK
+        File.unlink( backup_path )
+        File.unlink( path ) if File.exist?( path )
+        return
+      end
+      self.info "file: restoring backup [#{path}]"
+      FileUtils.cp( backup_path, path )
+      File.unlink( backup_path )
+    else # иначе просто стираем
+      File.unlink( path ) if File.exist?( path )
+      log "file: deleted [#{path}] to restore state"
+    end
+  end
 
   # TODO - распутать эту вермишель
   # TODO - в этом коде есть косяк, он затирает файлы, см tests/50-featured-nodes/64-file-overwrite-change
@@ -43,14 +68,7 @@ module DasPerformFile
       previously_written_path = File.read( flag_path ).chomp
       if previously_written_path != path
         # восстановим то что затерли ранее
-        if File.exist?( backup_path )
-          self.info "file: path changed, restoring backup file for previous path [#{previously_written_path}]"
-          FileUtils.cp( backup_path, previously_written_path )
-          File.unlink( backup_path )
-        else
-          File.unlink( previously_written_path ) if File.exist?( previously_written_path )
-          log "file: deleted old [#{previously_written_path}] due to path change"
-        end
+        restore_or_erase!( previously_written_path, backup_path )
         File.unlink( flag_path )
       end
     end
@@ -59,26 +77,32 @@ module DasPerformFile
       #if ! is_path_relative( path ) # для локальных удалять не будем
       # неправильная идея неудалять. файл локальный хранится в вышестоящей компоненте! он там может быть лишним.
       # если есть бэкап - восстановим его
-      if File.exist?( backup_path )
-        self.info "file: restoring backup [#{path}]"
-        FileUtils.cp( backup_path, path )
-        File.unlink( backup_path )
-      else # иначе просто стираем
-        File.unlink( path ) if File.exist?( path )
-      end
+
       log "file: deleted [#{path}] due to destroy"
       #end
-      
-      File.unlink( flag_path ) if File.exist?( flag_path )
+      if File.exist?( flag_path )
+        restore_or_erase!( path, backup_path )
+        File.unlink( flag_path )
+      end
 #      unset_component_created_flag( vars["_component_name"] ) if is_component_created_flag(vars["_component_name"])
     else
       # сохраним бекап если еще не сохраняли
-      if File.exist?(path) && !File.exist?( backup_path )
-        # пишем впервые - надо сохранить оригинал
-        self.info "making backup of [#{path}] to [#{backup_path}]"
-        FileUtils.cp( path, backup_path )
+      if File.exist?(path)
+        if !File.exist?( backup_path )
+          # пишем впервые - надо сохранить оригинал
+          self.info "making backup of [#{path}] to [#{backup_path}]"
+          FileUtils.cp( path, backup_path )
+        end
+      else
+        # файла path не существует
+        # надо отметить, что там ничего не было
+        File.open( backup_path,"w" ) { |f|
+          f.puts EMPTY_BACKUP_MARK
+        }
       end
     
+      log "Writing file [#{path}]"
+      
       File.open( path,"w" ) { |f|
         f.write content
       }
@@ -89,7 +113,7 @@ module DasPerformFile
         end
         FileUtils.chmod( mode,  path )
       end
-      log "file: wrote [#{path}]"
+      
       
       File.open( flag_path,"w" ) { |flag|
         flag.puts path
