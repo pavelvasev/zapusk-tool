@@ -12,7 +12,7 @@ module DasParamsComputeInsert
                      "component_global_name"=>"vasev-papapdf", "stack_of_types_dirs"=>"/zapusk/vasev.zdb",
                      "type_dir" => "xxx"}
       trash_names = global_conf.merge( zapusk_params ).merge( other_trash )
-      a = params_of_current_zdb.delete_if{ |k,v| trash_names.has_key?(k) }
+      a = params_of_current_zdb.reject{ |k,v| trash_names.has_key?(k) }
       log "%params% keyword magic: inserting this things: #{a.inspect}"
       params = a.merge( params )
       params.delete( "params" )

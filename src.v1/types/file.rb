@@ -49,6 +49,11 @@ module DasPerformFile
   # TODO - распутать эту вермишель
   # TODO - в этом коде есть косяк, он затирает файлы, см tests/50-featured-nodes/64-file-overwrite-change
   def perform_type_file( vars, nxt )
+    if ! ["testing","apply","destroy"].include?(self.cmd)
+      log "command is not apply nor destroy - skipping file operation."
+      return stop_expression( nxt )
+    end
+  
     path = vars["path"] || raise("perform_type_file: path not specified")
     content = vars["content"] || ""
     # todo: может list на вход - список файлов?
@@ -56,6 +61,19 @@ module DasPerformFile
     
     if is_path_relative( path ) # relative
       path = File.join( self.state_dir, path )
+    end
+    
+    # временный дикий хак (внедрение левого кода + двойная реализация)
+    if self.cmd == "testing"
+      if vars["testing"] != "false"
+        s = if mode = vars["mode"]
+          " и иметь права #{mode}"
+        else
+          ""
+        end
+        info "TESTING: файл должен присутствовать path=#{path}#{s}"
+      end
+      return stop_expression( nxt )
     end
     
     # бэкапим затираемые файлы
