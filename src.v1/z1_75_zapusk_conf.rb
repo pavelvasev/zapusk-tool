@@ -69,6 +69,11 @@ module DasZapuskConf
        #log caller.join("\n")
     end
     
+    if q=p["prepend_zdb_dirs"]
+     arr = q.split(":")
+     self.zdb_lookup_dirs = arr + self.zdb_lookup_dirs
+    end
+    
     if p["use_state_params"]
       self.use_state_params = true
     end
