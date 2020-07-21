@@ -71,6 +71,8 @@ module DasPerformFile
         else
           ""
         end
+        #info "TESTING:#{ENV['ZAPUSK_TESTING_CONTEXT']} файл должен присутствовать path=#{path}#{s}"
+        #info "TESTING: файл должен присутствовать path=#{path}#{s} # via #{self.global_name}"
         info "TESTING: файл должен присутствовать path=#{path}#{s}"
       end
       return stop_expression( nxt )
