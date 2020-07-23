@@ -66,14 +66,19 @@ module DasPerformFile
     # временный дикий хак (внедрение левого кода + двойная реализация)
     if self.cmd == "testing"
       if vars["testing"] != "false"
-        s = if mode = vars["mode"]
+        construct = { "type" => "testing", "_component_name" => "testing",
+          "code" => "check-file", "arg_path" => path, "comment" => "файл должен присутствовать" }
+      
+        if mode = vars["mode"]
+          construct["arg_mode"] = vars["mode"]
           " и иметь права #{mode}"
         else
           ""
         end
+        perform_expression( [construct] )
         #info "TESTING:#{ENV['ZAPUSK_TESTING_CONTEXT']} файл должен присутствовать path=#{path}#{s}"
         #info "TESTING: файл должен присутствовать path=#{path}#{s} # via #{self.global_name}"
-        info "TESTING: файл должен присутствовать path=#{path}#{s}"
+        #info "TESTING: файл должен присутствовать path=#{path}#{s}"
       end
       return stop_expression( nxt )
     end

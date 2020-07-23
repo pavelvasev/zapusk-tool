@@ -55,7 +55,7 @@ module DasPerformBash
       print subos_colors_begin
       print "\n" if self.debug # доп \n нам нужен для более комфортного проведения тестов - грепить целые строчки
       opts = subos_command_options
-      r = system( opts, cmd )
+      r = system( opts, cmd, :close_others => false )
       print subos_colors_done
       print "\n" if self.debug
     end

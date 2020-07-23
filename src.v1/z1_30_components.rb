@@ -2,6 +2,14 @@
 #      which are high level of representation of zapusk program
 #      ready to be interpreted
 
+# format:
+#   [  { "name" => name, "sections" => [section1,section2,....] },
+#      { "name" => name, "sections" => [section1,section2,....] },
+#      ... ]
+#   where each section is:
+#      { "type" => type, "_component_name" => section_name, "var1" => var1, "var2" => var2, ... }
+
+
 module DasComponentsLoad
 
   def init_from_dir
