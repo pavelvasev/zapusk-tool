@@ -10,11 +10,21 @@ module DasTestingFeature
   # то пройти эту some,
   # но команду изменить на testing
   
+  attr_accessor :cmd_testing_prefix
+  def cmd=(v)
+    if v =~ /^(.+)-testing$/
+      self.cmd_testing_prefix=$1
+    else
+      self.cmd_testing_prefix=nil
+    end
+    super
+  end
+  
   # по сути, это вынос стандартного поведения на системный уровень
   def perform_type_commands( vars, nxt )
     # these commands should pass specially
-    if self.cmd =~ /^(.+)-testing$/
-      desired_route = vars[$1]
+    if self.cmd_testing_prefix
+      desired_route = vars[ self.cmd_testing_prefix ]
       if desired_route
         # anyway call.. it will be denied (if no state) later
         a = self.cmd
@@ -23,6 +33,11 @@ module DasTestingFeature
         self.cmd = a
         return r
       end
+    end
+    # особый случай - задана команда default и не задана testing
+    # в этом случае надо все-равно пройти дальше - с testing
+    if vars["default"] && ! vars["testing"]
+      return perform_expression( nxt )
     end
     super
   end
