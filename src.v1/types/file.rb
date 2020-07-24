@@ -67,15 +67,20 @@ module DasPerformFile
     if self.cmd == "testing"
       if vars["testing"] != "false"
         construct = { "type" => "testing", "_component_name" => "testing",
-          "code" => "check-file", "arg_path" => path, "comment" => "файл должен присутствовать" }
+          "code" => "file-exist", "arg_list" => path, "comment" => "Файл должен присутствовать" }
+          
+        perform_expression( [construct] )
       
         if mode = vars["mode"]
           construct["arg_mode"] = vars["mode"]
-          " и иметь права #{mode}"
+          construct["code"] = "fs-mode"
+          construct["comment"] = "Файл имеет указанные права доступа"
+          construct["_component_name"] = "testing-fs-mode"
+          perform_expression( [construct] )
         else
           ""
         end
-        perform_expression( [construct] )
+        
         #info "TESTING:#{ENV['ZAPUSK_TESTING_CONTEXT']} файл должен присутствовать path=#{path}#{s}"
         #info "TESTING: файл должен присутствовать path=#{path}#{s} # via #{self.global_name}"
         #info "TESTING: файл должен присутствовать path=#{path}#{s}"
