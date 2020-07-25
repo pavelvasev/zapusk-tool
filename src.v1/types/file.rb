@@ -67,7 +67,7 @@ module DasPerformFile
     if self.cmd == "testing"
       if vars["testing"] != "false"
         construct = { "type" => "testing", "_component_name" => "testing",
-          "code" => "file-exist", "arg_list" => path, "comment" => "Файл должен присутствовать" }
+          "code" => "file-exist", "arg_list" => path, "comment" => "Файл существует" }
           
         perform_expression( [construct] )
       
