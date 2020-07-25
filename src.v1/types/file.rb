@@ -66,7 +66,7 @@ module DasPerformFile
     # временный дикий хак (внедрение левого кода + двойная реализация)
     if self.cmd == "testing"
       if vars["testing"] != "false"
-        construct = { "type" => "testing", "_component_name" => "testing",
+        construct = { "type" => "testing", "_component_name" => "#{vars['_component_name']}-file-testing",
           "code" => "file-exist", "arg_list" => path, "comment" => "Файл существует" }
           
         perform_expression( [construct] )
@@ -75,7 +75,7 @@ module DasPerformFile
           construct["arg_mode"] = vars["mode"]
           construct["code"] = "fs-mode"
           construct["comment"] = "Файл имеет указанные права доступа"
-          construct["_component_name"] = "testing-fs-mode"
+          construct["_component_name"] = "#{vars['_component_name']}-file-mode-testing"
           perform_expression( [construct] )
         else
           ""
