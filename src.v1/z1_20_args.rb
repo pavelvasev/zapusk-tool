@@ -5,11 +5,8 @@ module DasArgs
   def init_from_args(args)
     # info "init_from_args: args=#{args.inspect}"
   
-    self.cmd = args[0] || begin
-      log "command in argv[0] not specified. assuming default: help"
-      "help"
-    end
-    i=1
+    self.cmd = nil
+    i=0
     while i < args.length do
       v = args[i]
       if v == "--zdb" || v == "--zdb_dir" 
@@ -49,7 +46,7 @@ module DasArgs
         self.padding = args[i+1] || (raise "init_from_args: where is padding parameter value?")
         i=i+2
         next
-      end      
+      end
       if v == "--debug"
         self.debug = true
         log "init_from_args: debug true."
@@ -82,10 +79,24 @@ module DasArgs
         next
       end
       
+      if self.cmd.nil?
+        self.cmd=args[i]
+        i=i+1
+        next
+      end
+      
       raise "init_from_args: unparsed argument! v=#{v}. btw args=#{args.inspect}"
       
       i=i+1
     end
+    
+    self.cmd ||= begin
+      log "init_from_args: cmd not specified, assuming default value for cmd is 'apply'"
+      "apply"
+      end
+  
+    
+    
   end
 
 end
