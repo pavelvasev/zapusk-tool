@@ -46,6 +46,10 @@ module DasPerformRun
       else
         lang = vars[ "lang" ] || "bash"
         f.puts "#!/usr/bin/env #{lang}"
+        if lang == "ruby"
+          # super ugly ruby feature is not to include rubygems by default (at least for 1.8)
+          code = "require 'rubygems'\n" + code
+        end
       end
       f.puts code
     end
