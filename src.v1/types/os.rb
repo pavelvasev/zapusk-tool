@@ -47,9 +47,17 @@ module DasPerformBash
     end
     
     log "perform_type_os: invoke cmdline=#{cmd}"
-    
-    r = nil
+    res = subos_system( cmd )
+    if res == :ok
+      stop_expression( nxt )
+    else
+      res
+    end
+  end
+
+  def subos_system( cmd )
     log "changing dir to: #{self.state_dir}"
+    r = nil
     Dir.chdir( self.state_dir ) do
       
       print subos_colors_begin
@@ -78,8 +86,7 @@ module DasPerformBash
     else
       log "perform_type_os: os command executed"
     end
-
-    stop_expression( nxt )
+    :ok
   end
 
 end
