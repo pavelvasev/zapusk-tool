@@ -48,7 +48,7 @@ module DasStateManage
     sf = self.state_files || {}
 
     sf["params.txt"] = { "content" => self.params }
-    sf["params.sh"] = { "content" => self.params, "escaping" => true }
+    # sf["params.sh"] = { "content" => self.params, "escaping" => true }
     sf["zapusk.conf"] = { "content" => self.zapusk_params.merge({"use_state_params"=>1}) }
 
 #    if self.expression_args && self.expression_args.length > 0

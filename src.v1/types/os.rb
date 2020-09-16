@@ -46,6 +46,9 @@ module DasPerformBash
       end
     end
     
+    #### save params.sh - might be used by sh programs
+    write_params_file( File.join(self.state_dir,"params.sh"), self.params, true )
+    
     log "perform_type_os: invoke cmdline=#{cmd}"
     res = subos_system( cmd )
     if res == :ok
