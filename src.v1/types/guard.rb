@@ -41,7 +41,9 @@ module DasPerformGuard
     guards_dir = vars[ "dir" ] || "/zapusk/_guards/"
     # info "guards_dir=#{guards_dir}"
     key_dir = File.join( guards_dir,vars['key'] )
-    priority_prefix = vars['priority'] ? "#{vars['priority']}-" : ""
+    #priority_prefix = vars['priority'] ? "#{vars['priority']}-" : ""
+    # let it be aways 20 as a default prefix.
+    priority_prefix = (vars['priority'] || "20") + "-"
     FileUtils.makedirs( key_dir, :mode => (guards_dir == "/zapusk/_guards/" ? 0777 : nil) )
     # if global guard created, it should have free access flag..
     # or maybe save it in local user home?
@@ -50,6 +52,7 @@ module DasPerformGuard
     this_global_name = self.global_name + "-" + vars["_component_name"]
     fn = File.join( key_dir,"#{priority_prefix}#{this_global_name}.state" )
     fmask = File.join( key_dir,"*.state" )
+    fn_older_mask = File.join( key_dir,"*#{this_global_name}.{state,flag}" )
 
     if self.cmd == "destroy" || self.cmd == "remove_removed"
       if File.exist?( fn )
@@ -73,6 +76,16 @@ module DasPerformGuard
       }
     end
     
+    # найти старые файлы
+    fne = File.expand_path( fn )
+    Dir.glob( fn_older_mask ).each do |f|
+      if File.expand_path( f ) != fne
+        info "guard: unlinking unneeded file #{f}"
+        File.unlink( f )
+      end
+    end
+    
+    # найти главный компонент
     host = Dir.glob( fmask ).sort.first
     
     host_state_dir = File.readlines( host ).first.chomp
