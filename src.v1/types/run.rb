@@ -4,6 +4,7 @@
 # * lang
 # * command1, command2, ...
 # after execution, evaluation is passed to the next statement
+# (for chaining codes of various langs)
 
 # THINK: currently [run] are spawned as subprocesses
 # probably better to think of them as a code spawned in a special envelope?
@@ -14,6 +15,8 @@
 
 #require "yaml"
 require "json"
+# json is selected 1) seems to be much faster than yaml, 2) a lot of codes supports json
+# idea: maybe choose how to save params (and if no need don't save them at all)
 
 module DasPerformRun
 
