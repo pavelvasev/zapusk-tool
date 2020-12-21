@@ -61,14 +61,18 @@ module DasParamsIO
         nama = $1
         stracc = ""
         start_i = i
+        found = false
         while i < content.length do
           sl = content[i]
           i = i+1
-          break if sl.strip == '"'
+          if sl.strip == '"'
+            found = true
+            break
+          end
           stracc = stracc + (stracc.length > 0 ? "\n" : "") + sl.chomp
         end
         
-        if i == content.length
+        if !found
           fn = file_resolver_lambda ? file_resolver_lambda.call( start_i ) : nil
           warning "un-closed multiline value found: name=#{nama}, file=#{fn}"
           # todo: check for cross-borders of ini parts? e.g. if var is not closed in current part..
