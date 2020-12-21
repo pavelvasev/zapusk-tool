@@ -60,12 +60,20 @@ module DasParamsIO
       elsif line =~ /^([\w\-_\@]+)\s*=\s*"\s*$/ # case: multiline value, e.g. = "
         nama = $1
         stracc = ""
+        start_i = i
         while i < content.length do
           sl = content[i]
           i = i+1
           break if sl.strip == '"'
           stracc = stracc + (stracc.length > 0 ? "\n" : "") + sl.chomp
         end
+        
+        if i == content.length
+          fn = file_resolver_lambda ? file_resolver_lambda.call( start_i ) : nil
+          warning "un-closed multiline value found: name=#{nama}, file=#{fn}"
+          # todo: check for cross-borders of ini parts? e.g. if var is not closed in current part..
+        end
+        
         # info "long value found: #{stracc}"
         acc = assign_param_value( acc, nama, stracc )
       elsif line =~ /^([\w\-_]+)\s*=\s*(.*)$/ # case: value not in quotes

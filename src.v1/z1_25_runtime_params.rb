@@ -43,7 +43,7 @@ module DasOwnParams
     
     line_counts = []
     gg.sort.each do |f|
-#      log "load_own_params: found #{f}"
+      # log "load_own_params: found #{f}"
       c = File.readlines( f ) # IO. ?
       line_counts.push( [f, c.length] )
       
@@ -74,12 +74,12 @@ module DasOwnParams
     body = read_params_content( acc, {}, file_name_helper )
 
     if !body["sections"].is_a?(Array)
-      # warning "load_own_params: loaded content from mask #{mask} have no ini sections!"
+      log "load_own_params: loaded content from mask #{mask} have no ini sections!"
       info "loaded content: #{body}"
       return {},[]
       # todo может это и не ошибка
     end
-#    log "load_own_params: body=#{body.inspect}"
+#    log "load_own_params: body=#{body['sections'].inspect}"
     acc2 = []
     acc_own_params = {}
     body["sections"].each do |s|
@@ -92,8 +92,9 @@ module DasOwnParams
       end
     end
     
+#    log "load_own_params: own_params=#{acc_own_params.inspect}, own_body=#{acc2.inspect}"
     return acc_own_params, acc2
-#    log "load_own_params: own_params=#{self.own_params.inspect}"
+    
   end
 
   def compute_final_self_params
@@ -107,6 +108,8 @@ module DasOwnParams
     # при вычислении собственных значений..
     p = compute_params( p,{},"#{self.global_prefix}/#{self.name} params" )
 
+#    log "compute_final_self_params: params=#{p.inspect}"
+#    log "compute_final_self_params: own_params=#{own_params.inspect}"
     self.params = p
     p
   end
