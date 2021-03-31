@@ -13,7 +13,7 @@ module DasPerformLoad
     if is_path_relative( dir ) # relative to zdb_dir
       dir = File.join( File.expand_path(self.dir), dir )
     end
-    log "perform_type_load: using dir [#{dir}]"
+    info "perform_type_load: using dir [#{dir}]"
     do_perform_zdb( dir, vars, nxt )
   end
 
