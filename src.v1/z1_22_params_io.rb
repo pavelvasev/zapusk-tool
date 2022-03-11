@@ -55,7 +55,7 @@ module DasParamsIO
       line = content[i].strip
       i = i+1
 
-      if line =~ /^([\w\-_\@]+)\s*=\s*['"](.+)['"]$/ # case: value in quotes
+      if line =~ /^([\w\-_\@\*\/]+)\s*=\s*['"](.+)['"]$/ # case: value in quotes
         acc = assign_param_value( acc, $1, $2 )
       elsif line =~ /^([\w\-_\@]+)\s*=\s*"\s*$/ # case: multiline value, e.g. = "
         nama = $1
@@ -80,7 +80,7 @@ module DasParamsIO
         
         # info "long value found: #{stracc}"
         acc = assign_param_value( acc, nama, stracc )
-      elsif line =~ /^([\w\-_]+)\s*=\s*(.*)$/ # case: value not in quotes
+      elsif line =~ /^([\w\-_\@\*\/]+)\s*=\s*(.*)$/ # case: value not in quotes
         acc = assign_param_value( acc, $1, $2 )
       elsif line =~ /^([\w\-_\s]+)\s*$/  # case: boolean value (no = sign => true)
         acc = assign_param_value( acc, $1, true )
